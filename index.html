@@ -12,39 +12,41 @@
 html,body{overscroll-behavior:none}
 
 /* ==================== FABULOUS GRADIENT THEME ==================== */
+
 :root{
-  --bg:#0f0820;
-  --bg2:#1a1040;
-  --card:rgba(255,255,255,.06);
-  --card2:rgba(255,255,255,.1);
-  --card3:rgba(255,255,255,.15);
+  --bg:#101422;
+  --bg2:#181d2e;
+  --card:#272B3B;
+  --card2:#32384d;
+  --card3:#3f465e;
   --text:#ffffff;
-  --text2:#b8b0d4;
-  --text3:#7a7099;
-  --primary:#ff6b9d;
-  --primary2:#ffa8c5;
-  --accent:#c084fc;
-  --accent2:#a78bfa;
-  --success:#4ade80;
-  --warning:#fbbf24;
-  --danger:#f87171;
-  --info:#60a5fa;
-  --border:rgba(255,255,255,.12);
-  --shadow:0 20px 60px rgba(0,0,0,.5);
-  --glow:0 0 40px rgba(255,107,157,.3);
-  --grad-morning:linear-gradient(135deg,#ff6b9d,#c084fc);
+  --text2:#A0A8C0;
+  --text3:#6B7280;
+  --primary:#A8DCE7;
+  --primary2:#C4EEF7;
+  --accent:#A8DCE7;
+  --accent2:#60a5fa;
+  --success:#10b981;
+  --warning:#f59e0b;
+  --danger:#ef4444;
+  --info:#22d3ee;
+  --border:#32384d;
+  --shadow:0 20px 60px rgba(0,0,0,.6);
+  --glow:0 0 30px rgba(168,220,231,.3);
+  --grad-morning:linear-gradient(135deg,#A8DCE7,#60a5fa);
   --grad-afternoon:linear-gradient(135deg,#fbbf24,#fb923c);
   --grad-evening:linear-gradient(135deg,#60a5fa,#a78bfa);
-  --grad-main:linear-gradient(135deg,#ff6b9d 0%,#c084fc 50%,#60a5fa 100%);
+  --grad-main:linear-gradient(135deg,#A8DCE7 0%,#60a5fa 100%);
 }
+
 
 body{
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
   background:var(--bg);
   background-image:
-    radial-gradient(circle at 0% 0%, rgba(192,132,252,.15) 0%, transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(255,107,157,.15) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(96,165,250,.08) 0%, transparent 70%);
+    radial-gradient(circle at 0% 0%, rgba(168,220,231,.12) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(96,165,250,.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(34,211,238,.06) 0%, transparent 70%);
   color:var(--text);
   min-height:100vh;
   padding:16px;
@@ -3428,8 +3430,7 @@ window.checkAllComplete = function() {
 /* ==================== CELEBRATION ==================== */
 
 window.celebrate = function() {
-  const colors = ['#ff6b9d', '#c084fc', '#60a5fa', '#4ade80', '#fbbf24'];
-
+   const colors = ['#A8DCE7', '#60a5fa', '#22d3ee', '#10b981', '#fbbf24'];
   for (let i = 0; i < 80; i++) {
     const piece = document.createElement('div');
     piece.className = 'confetti-piece';
