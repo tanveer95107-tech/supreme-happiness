@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<meta name="theme-color" content="#6366f1" />
+<meta name="description" content="HabitAI Pro — World's most advanced habit tracker with AI" />
+<title>HabitAI Pro — Smart Habit Tracker</title>
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22HabitAI%20Pro%22%2C%22short_name%22%3A%22HabitAI%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230f172a%22%2C%22theme_color%22%3A%22%236366f1%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%253D%25270%25200%2520100%2520100%2527%253E%253Crect%2520width%253D%2527100%2527%2520height%253D%2527100%2527%2520rx%253D%252720%2527%2520fill%253D%2527%25236366f1%2527%2F%253E%253Ctext%2520x%253D%252750%2527%2520y%253D%252768%2527%2520font-size%253D%252760%2527%2520text-anchor%253D%2527middle%2527%253E%25F0%259F%258E%25AF%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
+<style>
+/* ============ RESET ============ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{overscroll-behavior:none}
+
+/* ============ THEMES ============ */
+:root,[data-theme="dark"]{
+  --bg:#0f172a;--bg2:#1e293b;--card:#1e293b;--card2:#334155;--card3:#475569;
+  --text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;
+  --primary:#6366f1;--primary2:#818cf8;--success:#10b981;--warning:#f59e0b;
+  --danger:#ef4444;--info:#06b6d4;--pink:#ec4899;--purple:#8b5cf6;
+  --border:#334155;--shadow:0 10px 30px rgba(0,0,0,.3);
+  --grad:linear-gradient(135deg,#6366f1,#8b5cf6);
+}
+[data-theme="light"]{
+  --bg:#f8fafc;--bg2:#f1f5f9;--card:#fff;--card2:#f1f5f9;--card3:#e2e8f0;
+  --text:#0f172a;--text2:#64748b;--text3:#94a3b8;
+  --border:#e2e8f0;--shadow:0 10px 30px rgba(0,0,0,.08);
+  --grad:linear-gradient(135deg,#6366f1,#8b5cf6);
+}
+[data-theme="ocean"]{
+  --bg:#0c1821;--bg2:#1b2a41;--card:#1b2a41;--card2:#324a5f;--card3:#405e7a;
+  --text:#e0fbfc;--text2:#98c1d9;--text3:#6a9bb8;
+  --primary:#00b4d8;--primary2:#48cae4;--success:#06d6a0;--warning:#ffd166;
+  --danger:#ef476f;--border:#324a5f;--shadow:0 10px 30px rgba(0,0,0,.4);
+  --grad:linear-gradient(135deg,#0077b6,#00b4d8);
+}
+[data-theme="sunset"]{
+  --bg:#1a0f1a;--bg2:#2d1b2d;--card:#2d1b2d;--card2:#4a2a4a;--card3:#6b3a6b;
+  --text:#ffecd1;--text2:#e0a899;--text3:#b08070;
+  --primary:#ff6b6b;--primary2:#ff8787;--success:#51cf66;--warning:#ffd43b;
+  --danger:#c92a2a;--border:#4a2a4a;--shadow:0 10px 30px rgba(0,0,0,.4);
+  --grad:linear-gradient(135deg,#ff6b6b,#ffd93d);
+}
+[data-theme="forest"]{
+  --bg:#0d1f0d;--bg2:#1a331a;--card:#1a331a;--card2:#2d4a2d;--card3:#4a6a4a;
+  --text:#e8f5e9;--text2:#a5d6a7;--text3:#7aa67a;
+  --primary:#4caf50;--primary2:#66bb6a;--success:#00c853;--warning:#ffab00;
+  --danger:#d32f2f;--border:#2d4a2d;--shadow:0 10px 30px rgba(0,0,0,.4);
+  --grad:linear-gradient(135deg,#2e7d32,#66bb6a);
+}
+
+/* ============ BASE ============ */
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:var(--bg);color:var(--text);min-height:100vh;
+  transition:background .3s,color .3s;padding:12px;padding-bottom:90px;
+  -webkit-font-smoothing:antialiased;
+}
+.app{max-width:560px;margin:0 auto}
+a{color:var(--primary);text-decoration:none}
+button{font-family:inherit}
+
+/* ============ HEADER ============ */
+.header{
+  background:var(--grad);border-radius:22px;padding:20px;margin-bottom:14px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.header::before{
+  content:'';position:absolute;top:-50%;right:-20%;width:220px;height:220px;
+  background:rgba(255,255,255,.1);border-radius:50%;
+}
+.header::after{
+  content:'';position:absolute;bottom:-60%;left:-10%;width:180px;height:180px;
+  background:rgba(255,255,255,.08);border-radius:50%;
+}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;gap:8px}
+.header h1{font-size:22px;color:#fff;display:flex;align-items:center;gap:8px}
+.header .greet{font-size:12px;color:rgba(255,255,255,.85);margin-top:4px;line-height:1.4}
+.header-actions{display:flex;gap:6px;flex-shrink:0}
+.icon-btn{
+  background:rgba(255,255,255,.2);border:none;width:38px;height:38px;
+  border-radius:11px;cursor:pointer;font-size:16px;color:#fff;
+  display:flex;align-items:center;justify-content:center;transition:.2s;
+}
+.icon-btn:hover{background:rgba(255,255,255,.35);transform:scale(1.05)}
+.icon-btn:active{transform:scale(.95)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;position:relative;z-index:1}
+.stat{
+  background:rgba(255,255,255,.15);border-radius:13px;padding:10px 6px;
+  text-align:center;backdrop-filter:blur(12px);cursor:pointer;transition:.2s;
+}
+.stat:hover{background:rgba(255,255,255,.25)}
+.stat-num{font-size:18px;font-weight:700;color:#fff}
+.stat-lbl{font-size:9px;color:rgba(255,255,255,.85);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ============ CARDS ============ */
+.card{
+  background:var(--card);border-radius:20px;padding:18px;
+  margin-bottom:14px;box-shadow:var(--shadow);border:1px solid var(--border);
+}
+.card h2{font-size:15px;margin-bottom:12px;color:var(--text);display:flex;align-items:center;gap:8px;justify-content:space-between}
+.card h2 .title{display:flex;align-items:center;gap:8px}
+.card h2 .actions{display:flex;gap:6px}
+.mini-btn{
+  background:var(--card2);border:none;color:var(--text2);cursor:pointer;
+  padding:5px 10px;border-radius:8px;font-size:11px;font-weight:600;transition:.2s;
+}
+.mini-btn:hover{background:var(--card3);color:var(--text)}
+.mini-btn.active{background:var(--primary);color:#fff}
+
+/* ============ PROGRESS RING ============ */
+.ring-wrap{display:flex;justify-content:center;margin:10px 0}
+.ring-svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--card2);stroke-width:8}
+.ring-fg{fill:none;stroke:url(#grad);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.ring-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;font-weight:700;color:var(--text)}
+.ring-sub{position:absolute;top:62%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:var(--text3)}
+.ring-container{position:relative;display:inline-block}
+
+/* ============ QUOTE ============ */
+.quote-box{
+  background:var(--card);border-radius:16px;padding:14px;margin-bottom:14px;
+  border-left:4px solid var(--primary);font-style:italic;font-size:13px;
+  color:var(--text2);line-height:1.5;
+}
+.quote-box .author{font-size:11px;color:var(--text3);margin-top:6px;font-style:normal;font-weight:600}
+
+/* ============ SEARCH / FILTER BAR ============ */
+.toolbar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.toolbar input{
+  flex:1;min-width:120px;padding:9px 12px;border:2px solid var(--border);
+  border-radius:10px;background:var(--bg);color:var(--text);font-size:12px;outline:none;
+}
+.toolbar input:focus{border-color:var(--primary)}
+.toolbar select{
+  padding:9px 10px;border:2px solid var(--border);border-radius:10px;
+  background:var(--bg);color:var(--text);font-size:11px;outline:none;cursor:pointer;
+}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{
+  background:var(--card2);border:1px solid var(--border);color:var(--text2);
+  padding:5px 11px;border-radius:20px;font-size:11px;cursor:pointer;transition:.2s;
+  display:flex;align-items:center;gap:4px;
+}
+.chip:hover{background:var(--card3)}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* ============ HABIT LIST ============ */
+.habit{
+  display:flex;align-items:center;gap:11px;padding:12px;
+  border-radius:14px;margin-bottom:8px;background:var(--card2);
+  transition:.2s;border:1px solid transparent;cursor:pointer;position:relative;
+}
+.habit:hover{border-color:var(--primary);transform:translateX(2px)}
+.habit.done{background:rgba(16,185,129,.12);border-color:var(--success)}
+.habit.archived{opacity:.5}
+.habit-check{
+  width:38px;height:38px;border-radius:50%;border:2px solid var(--border);
+  background:transparent;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:17px;transition:.2s;flex-shrink:0;
+  color:var(--text2);font-weight:700;
+}
+.habit.done .habit-check{background:var(--success);border-color:var(--success);color:#fff}
+.habit-check:active{transform:scale(.9)}
+.habit-info{flex:1;min-width:0}
+.habit-name{font-size:14px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.habit.done .habit-name{text-decoration:line-through;color:var(--text2)}
+.habit-badge{
+  font-size:9px;padding:2px 6px;border-radius:6px;background:var(--card3);
+  color:var(--text2);text-transform:uppercase;font-weight:700;letter-spacing:.3px;
+}
+.habit-badge.count{background:rgba(6,182,212,.2);color:var(--info)}
+.habit-badge.duration{background:rgba(139,92,246,.2);color:var(--purple)}
+.habit-badge.negative{background:rgba(239,68,68,.2);color:var(--danger)}
+.habit-meta{font-size:11px;color:var(--text2);margin-top:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.habit-streak{color:var(--warning);font-weight:600}
+.habit-progress{
+  width:100%;height:4px;background:var(--card3);border-radius:2px;
+  margin-top:5px;overflow:hidden;
+}
+.habit-progress-fill{height:100%;background:var(--primary);border-radius:2px;transition:width .3s}
+.habit-actions{display:flex;gap:2px}
+.habit-actions button{
+  background:transparent;border:none;color:var(--text3);cursor:pointer;
+  font-size:14px;padding:6px 7px;border-radius:8px;transition:.2s;
+}
+.habit-actions button:hover{background:var(--bg2);color:var(--text)}
+.habit-actions .del:hover{color:var(--danger)}
+.drag-handle{cursor:grab;color:var(--text3);font-size:14px;padding:4px}
+.habit.dragging{opacity:.4;transform:scale(.98)}
+
+/* ============ ADD FORM ============ */
+.add-form{display:flex;gap:8px}
+.add-form input{
+  flex:1;padding:12px 14px;border:2px solid var(--border);border-radius:12px;
+  font-size:13px;outline:none;background:var(--bg);color:var(--text);transition:.2s;
+}
+.add-form input:focus{border-color:var(--primary)}
+.add-form button{
+  background:var(--primary);color:#fff;border:none;padding:0 18px;
+  border-radius:12px;font-weight:600;cursor:pointer;font-size:20px;transition:.2s;
+}
+.add-form button:hover{background:var(--primary2);transform:scale(1.05)}
+
+/* ============ AI BOX ============ */
+.ai-box{background:var(--grad);color:#fff;border:none}
+.ai-box h2{color:#fff}
+.ai-output{
+  background:rgba(0,0,0,.2);border-radius:14px;padding:14px;font-size:13px;
+  line-height:1.6;min-height:70px;white-space:pre-wrap;margin-bottom:10px;
+  backdrop-filter:blur(10px);
+}
+.ai-btns{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ai-btns button{
+  background:rgba(255,255,255,.2);color:#fff;border:none;padding:10px 8px;
+  border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;
+  transition:.2s;display:flex;align-items:center;justify-content:center;gap:4px;
+}
+.ai-btns button:hover{background:rgba(255,255,255,.35)}
+.ai-btns button:disabled{opacity:.5;cursor:not-allowed}
+
+/* ============ HEATMAP ============ */
+.heatmap{display:grid;grid-template-columns:repeat(18,1fr);gap:3px;margin-top:8px}
+.heatmap.year{grid-template-columns:repeat(53,1fr);gap:2px}
+.heat-cell{aspect-ratio:1;border-radius:3px;background:var(--card2);transition:.2s;cursor:pointer}
+.heat-cell:hover{outline:2px solid var(--primary);outline-offset:1px}
+.heat-cell.l1{background:rgba(99,102,241,.25)}
+.heat-cell.l2{background:rgba(99,102,241,.5)}
+.heat-cell.l3{background:rgba(99,102,241,.75)}
+.heat-cell.l4{background:var(--primary)}
+.heat-legend{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3);margin-top:8px;justify-content:flex-end}
+
+/* ============ BAR CHART ============ */
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:130px;padding:8px 0}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar-bg{width:100%;background:var(--card2);border-radius:6px;height:100px;display:flex;align-items:flex-end;overflow:hidden;position:relative}
+.bar-fill{width:100%;background:var(--primary);border-radius:6px;transition:height .6s;min-height:4px}
+.bar-fill.today{background:var(--success)}
+.bar-lbl{font-size:10px;color:var(--text3)}
+.bar-lbl.today{color:var(--success);font-weight:700}
+
+/* ============ ACHIEVEMENTS ============ */
+.ach-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ach{
+  background:var(--card2);border-radius:12px;padding:10px 12px;
+  font-size:11px;display:flex;align-items:center;gap:8px;
+  border:1px solid var(--border);opacity:.5;transition:.2s;
+}
+.ach.unlocked{opacity:1;border-color:var(--warning);background:rgba(245,158,11,.1)}
+.ach .icon{font-size:20px}
+.ach .name{font-weight:700;color:var(--text);display:block}
+.ach .desc{font-size:10px;color:var(--text3)}
+
+/* ============ MODAL ============ */
+.modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:16px;z-index:200;
+}
+.modal-bg.show{display:flex;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--card);border-radius:22px;padding:22px;max-width:440px;width:100%;
+  border:1px solid var(--border);max-height:92vh;overflow-y:auto;animation:slideUp .3s;
+}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal h3{margin-bottom:6px;color:var(--text);font-size:18px;display:flex;align-items:center;gap:8px}
+.modal p{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.5}
+.modal input,.modal select,.modal textarea{
+  width:100%;padding:11px;border:2px solid var(--border);border-radius:12px;
+  font-size:13px;margin-bottom:10px;outline:none;background:var(--bg);color:var(--text);
+  font-family:inherit;resize:vertical;
+}
+.modal input:focus,.modal select:focus,.modal textarea:focus{border-color:var(--primary)}
+.modal label{font-size:11px;color:var(--text2);margin-bottom:4px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.modal-actions{display:flex;gap:8px;margin-top:6px}
+.modal-actions button{
+  flex:1;padding:11px;border-radius:12px;font-weight:600;cursor:pointer;
+  border:none;font-size:13px;transition:.2s;
+}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary2)}
+.btn-secondary{background:var(--card2);color:var(--text)}
+.btn-secondary:hover{background:var(--card3)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#dc2626}
+
+/* ============ EMOJI PICKER ============ */
+.emoji-picker{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;max-height:120px;overflow-y:auto}
+.emoji-picker span{
+  font-size:20px;cursor:pointer;padding:6px;border-radius:8px;
+  border:2px solid transparent;transition:.2s;
+}
+.emoji-picker span:hover{background:var(--card2)}
+.emoji-picker span.selected{border-color:var(--primary);background:var(--card2)}
+
+/* ============ COLOR PICKER ============ */
+.color-picker{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.color-picker div{
+  width:30px;height:30px;border-radius:50%;cursor:pointer;
+  border:3px solid transparent;transition:.2s;
+}
+.color-picker div.selected{border-color:#fff;transform:scale(1.15);box-shadow:0 0 0 2px var(--primary)}
+
+/* ============ TOAST ============ */
+.toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(120px);
+  background:var(--success);color:#fff;padding:12px 20px;border-radius:12px;
+  font-size:13px;font-weight:600;z-index:300;transition:.35s;box-shadow:var(--shadow);
+  max-width:90vw;text-align:center;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{background:var(--danger)}
+.toast.info{background:var(--info)}
+
+/* ============ CONFETTI ============ */
+.confetti-piece{position:fixed;width:8px;height:14px;top:-20px;z-index:150;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* ============ SPINNER ============ */
+.spinner{
+  width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;
+  display:inline-block;vertical-align:middle;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:30px;color:var(--text3);font-size:13px}
+
+/* ============ BOTTOM NAV ============ */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;background:var(--card);
+  border-top:1px solid var(--border);display:flex;justify-content:space-around;
+  padding:6px 0;z-index:100;backdrop-filter:blur(20px);
+}
+.nav-item{
+  background:none;border:none;color:var(--text3);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  font-size:9px;padding:5px 8px;border-radius:10px;transition:.2s;flex:1;
+}
+.nav-item.active{color:var(--primary)}
+.nav-item span:first-child{font-size:18px}
+.page{display:none}
+.page.active{display:block;animation:fadeIn .3s}
+
+/* ============ CHAT ============ */
+.chat-box{max-height:340px;overflow-y:auto;margin-bottom:10px;padding:4px}
+.chat-msg{
+  padding:10px 14px;border-radius:14px;margin-bottom:8px;font-size:13px;
+  line-height:1.5;max-width:85%;word-wrap:break-word;
+}
+.chat-msg.user{background:var(--primary);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.chat-msg.ai{background:var(--card2);color:var(--text);border-bottom-left-radius:4px}
+.chat-input{display:flex;gap:8px}
+.chat-input input{flex:1;padding:10px;border:2px solid var(--border);border-radius:12px;background:var(--bg);color:var(--text);outline:none;font-size:13px}
+.chat-input input:focus{border-color:var(--primary)}
+.chat-input button{background:var(--primary);color:#fff;border:none;padding:0 16px;border-radius:12px;cursor:pointer;font-size:16px}
+
+/* ============ HABIT DETAIL ============ */
+.habit-detail-header{text-align:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:14px}
+.habit-detail-header .emoji{font-size:44px}
+.habit-detail-header .name{font-size:20px;font-weight:700;margin-top:6px}
+.habit-detail-header .cat{font-size:11px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.detail-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.detail-stat{background:var(--card2);border-radius:12px;padding:12px;text-align:center}
+.detail-stat .num{font-size:20px;font-weight:700;color:var(--primary)}
+.detail-stat .lbl{font-size:10px;color:var(--text3);margin-top:2px;text-transform:uppercase}
+
+/* ============ TIMER ============ */
+.timer-display{font-size:38px;font-weight:700;text-align:center;color:var(--primary);font-variant-numeric:tabular-nums;margin:14px 0}
+.timer-btns{display:flex;gap:8px;justify-content:center}
+.timer-btns button{padding:10px 20px;border-radius:12px;border:none;font-weight:600;cursor:pointer;font-size:13px}
+
+/* ============ SUBTASKS ============ */
+.subtask{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg2);border-radius:10px;margin-bottom:6px;font-size:13px}
+.subtask input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:var(--primary)}
+.subtask.done{opacity:.55;text-decoration:line-through}
+
+/* ============ MOOD PICKER ============ */
+.mood-row{display:flex;gap:8px;justify-content:center;margin:12px 0;flex-wrap:wrap}
+.mood-btn{
+  width:44px;height:44px;border-radius:50%;border:2px solid var(--border);
+  background:var(--card2);cursor:pointer;font-size:20px;transition:.2s;
+}
+.mood-btn:hover{transform:scale(1.1)}
+.mood-btn.selected{background:var(--primary);border-color:var(--primary);transform:scale(1.15)}
+
+/* ============ TEMPLATE LIBRARY ============ */
+.template-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.template-card{
+  background:var(--card2);border-radius:12px;padding:12px;cursor:pointer;
+  transition:.2s;border:1px solid var(--border);text-align:center;font-size:12px;
+}
+.template-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+.template-card .emoji{font-size:24px;display:block;margin-bottom:4px}
+.template-card .name{font-weight:600;color:var(--text)}
+
+/* ============ ONBOARDING ============ */
+.onboard-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:400;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.onboard-overlay.show{display:flex}
+.onboard-box{
+  background:var(--card);border-radius:22px;padding:28px;max-width:400px;
+  text-align:center;border:1px solid var(--border);
+}
+.onboard-box .icon{font-size:60px;margin-bottom:14px}
+.onboard-box h3{font-size:20px;margin-bottom:10px}
+.onboard-box p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:16px}
+.onboard-dots{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
+.onboard-dots div{width:8px;height:8px;border-radius:50%;background:var(--card3)}
+.onboard-dots div.active{background:var(--primary);width:20px;border-radius:4px}
+
+/* ============ LOCK SCREEN ============ */
+.lock-screen{
+  position:fixed;inset:0;background:var(--bg);z-index:500;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.lock-screen.show{display:flex}
+.lock-box{text-align:center;max-width:300px;width:100%}
+.lock-box .icon{font-size:50px;margin-bottom:14px}
+.lock-box input{
+  width:100%;padding:14px;font-size:20px;text-align:center;letter-spacing:8px;
+  border:2px solid var(--border);border-radius:14px;background:var(--card);
+  color:var(--text);outline:none;margin-bottom:12px;
+}
+.pin-dots{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
+.pin-dots div{width:12px;height:12px;border-radius:50%;background:var(--card2)}
+.pin-dots div.filled{background:var(--primary)}
+
+/* ============ KEYPAD ============ */
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:280px;margin:0 auto}
+.keypad button{
+  padding:16px;font-size:20px;font-weight:600;background:var(--card2);
+  border:none;border-radius:14px;color:var(--text);cursor:pointer;transition:.2s;
+}
+.keypad button:hover{background:var(--card3)}
+.keypad button:active{transform:scale(.95)}
+
+/* ============ FAB ============ */
+.fab{
+  position:fixed;bottom:80px;right:16px;width:56px;height:56px;
+  border-radius:50%;background:var(--primary);color:#fff;border:none;
+  font-size:26px;cursor:pointer;box-shadow:0 8px 24px rgba(99,102,241,.5);
+  z-index:99;transition:.2s;display:flex;align-items:center;justify-content:center;
+}
+.fab:hover{transform:scale(1.1) rotate(90deg)}
+
+/* ============ SCROLLBAR ============ */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--card3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text3)}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- ========== LOCK SCREEN ========== -->
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-box">
+    <div class="icon">🔒</div>
+    <h3 style="margin-bottom:8px">HabitAI Locked</h3>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:14px">PIN daalein</p>
+    <div class="pin-dots" id="pinDots">
+      <div></div><div></div><div></div><div></div>
+    </div>
+    <div class="keypad" id="keypad">
+      <button onclick="pinPress('1')">1</button>
+      <button onclick="pinPress('2')">2</button>
+      <button onclick="pinPress('3')">3</button>
+      <button onclick="pinPress('4')">4</button>
+      <button onclick="pinPress('5')">5</button>
+      <button onclick="pinPress('6')">6</button>
+      <button onclick="pinPress('7')">7</button>
+      <button onclick="pinPress('8')">8</button>
+      <button onclick="pinPress('9')">9</button>
+      <button onclick="pinPress('clear')">✕</button>
+      <button onclick="pinPress('0')">0</button>
+      <button onclick="pinPress('del')">⌫</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ONBOARDING ========== -->
+<div class="onboard-overlay" id="onboard">
+  <div class="onboard-box">
+    <div class="icon" id="obIcon">🎯</div>
+    <h3 id="obTitle">HabitAI Pro Mein Khush Aamdeed</h3>
+    <p id="obText">Duniya ka sab se advanced habit tracker — AI coach, streaks, analytics, aur bohat kuch.</p>
+    <div class="onboard-dots" id="obDots">
+      <div class="active"></div><div></div><div></div><div></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="skipOnboard()">Skip</button>
+      <button class="btn-primary" onclick="nextOnboard()" id="obNext">Agla →</button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- ========== HEADER ========== -->
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>🎯 HabitAI <span style="font-size:11px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:8px;vertical-align:middle">PRO</span></h1>
+        <div class="greet" id="greet">Aaj ki tareekh</div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" onclick="toggleTheme()" title="Theme">🌙</button>
+        <button class="icon-btn" onclick="openSettings()" title="Settings">⚙️</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat" onclick="filterHabits('all')"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Habits</div></div>
+      <div class="stat" onclick="filterHabits('pending')"><div class="stat-num" id="statDone">0</div><div class="stat-lbl">Aaj Done</div></div>
+      <div class="stat" onclick="filterHabits('all')"><div class="stat-num" id="statBest">0</div><div class="stat-lbl">Best Streak</div></div>
+      <div class="stat" onclick="switchPage('stats')"><div class="stat-num" id="statLevel">1</div><div class="stat-lbl">Level</div></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: HOME ========== -->
+  <div class="page active" id="page-home">
+    <div class="quote-box" id="quoteBox"></div>
+
+    <div class="card">
+      <h2><span class="title">📊 Aaj ka Progress</span></h2>
+      <div class="ring-wrap">
+        <div class="ring-container">
+          <svg class="ring-svg" width="140" height="140">
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6366f1"/>
+                <stop offset="100%" stop-color="#10b981"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="70" cy="70" r="60"/>
+            <circle class="ring-fg" id="ringFg" cx="70" cy="70" r="60" stroke-dasharray="377" stroke-dashoffset="377"/>
+          </svg>
+          <div class="ring-text" id="ringText">0%</div>
+          <div class="ring-sub" id="ringSub">0/0 done</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="title">➕ Naya Habit</span>
+        <div class="actions">
+          <button class="mini-btn" onclick="openTemplateLibrary()">📚 Templates</button>
+        </div>
+      </h2>
+      <form class="add-form" onsubmit="quickAddHabit(event)">
+        <input id="habitInput" type="text" placeholder="jaise: 30 min walk, padhai..." maxlength="50" />
+        <button type="submit">+</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2><span class="title">📋 Aaj ke Habits</span>
+        <div class="actions">
+          <button class="mini-btn active" data-filter="all" onclick="filterHabits('all')">Sab</button>
+          <button class="mini-btn" data-filter="pending" onclick="filterHabits('pending')">Pending</button>
+          <button class="mini-btn" data-filter="done" onclick="filterHabits('done')">Done</button>
+        </div>
+      </h2>
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="🔍 Search..." oninput="render()" />
+        <select id="sortSelect" onchange="render()">
+          <option value="created">Naye pehle</option>
+          <option value="name">Naam (A-Z)</option>
+          <option value="streak">Streak zyada</option>
+          <option value="category">Category</option>
+        </select>
+      </div>
+      <div class="filter-chips" id="catChips"></div>
+      <div id="habitList"></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: AI COACH ========== -->
+  <div class="page" id="page-ai">
+    <div class="card ai-box">
+      <h2><span class="title">🤖 AI Coach</span></h2>
+      <div class="ai-output" id="aiOutput">AI se salah lene ke liye neeche button dabayein.</div>
+      <div class="ai-btns">
+        <button onclick="askAI('motivate')" id="btnMotivate">💪 Motivate</button>
+        <button onclick="askAI('suggest')" id="btnSuggest">💡 Naya Habit</button>
+        <button onclick="askAI('report')" id="btnReport">📊 Weekly Report</button>
+        <button onclick="askAI('recovery')" id="btnRecovery">🔄 Recovery</button>
+        <button onclick="askAI('breakdown')" id="btnBreakdown">🔨 Habit Tod</button>
+        <button onclick="askAI('insight')" id="btnInsight">🔍 Insights</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="title">💬 AI se Baat</span>
+        <div class="actions">
+          <button class="mini-btn" onclick="clearChat()">🗑 Clear</button>
+        </div>
+      </h2>
+      <div class="chat-box" id="chatBox">
+        <div class="chat-msg ai">Assalam-o-alaikum! Main aapka AI Coach hoon. Apne habits ke baare mein kuch bhi pooch sakte hain.</div>
+      </div>
+      <div class="chat-input">
+        <input id="chatInput" type="text" placeholder="Sawal likhein..." onkeypress="if(event.key==='Enter')sendChat()" />
+        <button onclick="sendChat()">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: ANALYTICS ========== -->
+  <div class="page" id="page-stats">
+    <div class="card">
+      <h2><span class="title">🔥 90-Din Heatmap</span>
+        <div class="actions">
+          <button class="mini-btn active" data-hm="90" onclick="switchHeatmap(90)">90d</button>
+          <button class="mini-btn" data-hm="365" onclick="switchHeatmap(365)">1 saal</button>
+        </div>
+      </h2>
+      <div class="heatmap" id="heatmap"></div>
+      <div class="heat-legend">
+        <span>Kam</span>
+        <div class="heat-cell" style="width:12px;height:12px"></div>
+        <div class="heat-cell l1" style="width:12px;height:12px"></div>
+        <div class="heat-cell l2" style="width:12px;height:12px"></div>
+        <div class="heat-cell l3" style="width:12px;height:12px"></div>
+        <div class="heat-cell l4" style="width:12px;height:12px"></div>
+        <span>Zyada</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="title">📈 Hafta War</span></h2>
+      <div class="bar-chart" id="weekChart"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="title">🎯 Category Breakdown</span></h2>
+      <div id="catBreakdown"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="title">🏆 Achievements</span></h2>
+      <div class="ach-list" id="achList"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="title">📊 Overall Stats</span></h2>
+      <div id="overallStats"></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: JOURNAL ========== -->
+  <div class="page" id="page-journal">
+    <div class="card">
+      <h2><span class="title">📔 Daily Journal</span>
+        <div class="actions">
+          <button class="mini-btn" onclick="openJournalModal()">✏️ Aaj ka note</button>
+        </div>
+      </h2>
+      <div id="journalList"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="title">😊 Mood Tracker</span></h2>
+      <div id="moodHistory"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== FAB ========== -->
+<button class="fab" onclick="openHabitModal()" title="Naya Habit">+</button>
+
+<!-- ========== BOTTOM NAV ========== -->
+<div class="bottom-nav">
+  <button class="nav-item active" onclick="switchPage('home', event)"><span>🏠</span>Home</button>
+  <button class="nav-item" onclick="switchPage('ai', event)"><span>🤖</span>AI</button>
+  <button class="nav-item" onclick="switchPage('stats', event)"><span>📊</span>Stats</button>
+  <button class="nav-item" onclick="switchPage('journal', event)"><span>📔</span>Journal</button>
+</div>
+
+<!-- ========== SETTINGS MODAL ========== -->
+<div class="modal-bg" id="settingsModal">
+  <div class="modal">
+    <h3>⚙️ Settings</h3>
+    <label>Gemini API Key</label>
+    <p style="margin-bottom:8px">Free key <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a> se milegi.</p>
+    <input id="apiKeyInput" type="password" placeholder="AIza..." />
+    <label>Aapka Naam</label>
+    <input id="nameInput" type="text" placeholder="jaise: Ahmed" maxlength="20" />
+    <label>Theme</label>
+    <select id="themeSelect" onchange="applyTheme(this.value)">
+      <option value="dark">🌙 Dark</option>
+      <option value="light">☀️ Light</option>
+      <option value="ocean">🌊 Ocean</option>
+      <option value="sunset">🌅 Sunset</option>
+      <option value="forest">🌲 Forest</option>
+    </select>
+    <label>PIN Lock (4 digits)</label>
+    <input id="pinInput" type="tel" placeholder="0000 (khali chhodein = off)" maxlength="4" />
+    <label>Sound Effects</label>
+    <select id="soundSelect">
+      <option value="on">🔊 On</option>
+      <option value="off">🔇 Off</option>
+    </select>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="mini-btn" onclick="exportData()" style="flex:1;padding:10px">📤 Export</button>
+      <button class="mini-btn" onclick="document.getElementById('importFile').click()" style="flex:1;padding:10px">📥 Import</button>
+      <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeSettings()">Cancel</button>
+      <button class="btn-primary" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== HABIT MODAL (ADD/EDIT) ========== -->
+<div class="modal-bg" id="habitModal">
+  <div class="modal">
+    <h3 id="habitModalTitle">➕ Naya Habit</h3>
+    <label>Habit ka Naam</label>
+    <input id="newHabitName" type="text" placeholder="jaise: 30 min walk" maxlength="40" />
+    <label>Type</label>
+    <select id="newHabitType" onchange="onTypeChange()">
+      <option value="boolean">✓ Yes / No (Kar liya?)</option>
+      <option value="count">🔢 Counter (jaise 8 glass paani)</option>
+      <option value="duration">⏱ Duration (jaise 30 min)</option>
+      <option value="negative">🚫 Negative (avoid karna)</option>
+    </select>
+    <div id="targetWrap" style="display:none">
+      <label>Daily Target</label>
+      <input id="newHabitTarget" type="number" min="1" value="1" />
+    </div>
+    <label>Emoji</label>
+    <div class="emoji-picker" id="emojiPicker"></div>
+    <label>Rang</label>
+    <div class="color-picker" id="colorPicker"></div>
+    <label>Category</label>
+    <select id="newHabitCat">
+      <option value="health">🏥 Health</option>
+      <option value="fitness">💪 Fitness</option>
+      <option value="learning">📚 Learning</option>
+      <option value="mind">🧘 Mindfulness</option>
+      <option value="work">💻 Productivity</option>
+      <option value="social">👥 Social</option>
+      <option value="finance">💰 Finance</option>
+      <option value="other">📦 Other</option>
+    </select>
+    <label>Reminder (optional)</label>
+    <input id="newHabitReminder" type="time" />
+    <label>Notes</label>
+    <textarea id="newHabitNotes" rows="2" placeholder="Koi note..."></textarea>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeHabitModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveNewHabit()" id="saveHabitBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TEMPLATE LIBRARY MODAL ========== -->
+<div class="modal-bg" id="templateModal">
+  <div class="modal">
+    <h3>📚 Habit Templates</h3>
+    <p>Ready-made habits — ek click mein add karein</p>
+    <input type="text" id="templateSearch" placeholder="🔍 Search..." oninput="renderTemplates()" />
+    <div class="template-grid" id="templateGrid"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeTemplateModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== HABIT DETAIL MODAL ========== -->
+<div class="modal-bg" id="detailModal">
+  <div class="modal">
+    <div id="detailContent"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeDetailModal()">Close</button>
+      <button class="btn-primary" onclick="editCurrentHabit()">✏️ Edit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CHECK-IN MODAL ========== -->
+<div class="modal-bg" id="checkinModal">
+  <div class="modal">
+    <h3 id="checkinTitle">✓ Habit Complete</h3>
+    <div id="checkinBody"></div>
+    <label>Mood (optional)</label>
+    <div class="mood-row" id="moodRow">
+      <button class="mood-btn" data-mood="1">😢</button>
+      <button class="mood-btn" data-mood="2">😐</button>
+      <button class="mood-btn" data-mood="3">🙂</button>
+      <button class="mood-btn" data-mood="4">😊</button>
+      <button class="mood-btn" data-mood="5">🤩</button>
+    </div>
+    <label>Note (optional)</label>
+    <textarea id="checkinNote" rows="2" placeholder="Kuch likhein..."></textarea>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeCheckinModal()">Cancel</button>
+      <button class="btn-primary" onclick="confirmCheckin()">Save ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== JOURNAL MODAL ========== -->
+<div class="modal-bg" id="journalModal">
+  <div class="modal">
+    <h3>📔 Aaj ka Journal</h3>
+    <p id="journalDate"></p>
+    <label>Mood</label>
+    <div class="mood-row" id="journalMoodRow">
+      <button class="mood-btn" data-mood="1">😢</button>
+      <button class="mood-btn" data-mood="2">😐</button>
+      <button class="mood-btn" data-mood="3">🙂</button>
+      <button class="mood-btn" data-mood="4">😊</button>
+      <button class="mood-btn" data-mood="5">🤩</button>
+    </div>
+    <label>Aaj kya hua?</label>
+    <textarea id="journalText" rows="5" placeholder="Aaj ka din kaisa raha..."></textarea>
+    <label>Gratitude (3 cheezein)</label>
+    <textarea id="journalGratitude" rows="3" placeholder="1.&#10;2.&#10;3."></textarea>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeJournalModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveJournal()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TIMER MODAL ========== -->
+<div class="modal-bg" id="timerModal">
+  <div class="modal">
+    <h3>⏱ Timer</h3>
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <div class="timer-btns">
+      <button class="btn-primary" onclick="toggleTimer()" id="timerToggleBtn">Start</button>
+      <button class="btn-secondary" onclick="resetTimer()">Reset</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="saveTimerProgress()">Save Progress</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TOAST ========== -->
+<div class="toast" id="toast"></div>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// PART 2 — JavaScript yahan aayega
+</script>
+</body>
+</html>
