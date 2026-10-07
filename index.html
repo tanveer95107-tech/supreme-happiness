@@ -1512,6 +1512,92 @@ input,select,textarea{font-family:inherit}
   margin-bottom:16px;
   opacity:.5;
 }
+/* ==================== PAGE SYSTEM ==================== */
+.page{display:none}
+.page.active{display:block;animation:fadeIn .3s}
+
+/* ==================== MINI BUTTON ==================== */
+.mini-btn{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text2);
+  cursor:pointer;
+  padding:6px 12px;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:700;
+  transition:.2s;
+}
+.mini-btn:hover{background:var(--card2);color:var(--text)}
+.mini-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* ==================== HOME HEADER ==================== */
+.home-header{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0 20px}
+.home-greet-time{font-size:13px;color:var(--text3);font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.home-greet-name{font-size:28px;font-weight:900;color:var(--text);margin-top:4px;letter-spacing:-.5px}
+.icon-btn-round{width:44px;height:44px;border-radius:14px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
+.icon-btn-round:hover{background:var(--card2);border-color:var(--primary)}
+
+/* ==================== TODAY PROGRESS CARD ==================== */
+.today-progress-card{background:linear-gradient(135deg,rgba(255,107,157,.1),rgba(192,132,252,.1));border:1px solid rgba(255,107,157,.25)}
+.today-progress-inner{display:flex;align-items:center;gap:18px}
+.today-ring-container{position:relative;width:120px;height:120px;flex-shrink:0}
+.today-ring-svg{transform:rotate(-90deg)}
+.today-ring-bg{fill:none;stroke:var(--card2);stroke-width:8}
+.today-ring-fg{fill:none;stroke:url(#todayGrad);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 0 8px rgba(255,107,157,.6))}
+.today-ring-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.today-ring-percent{display:block;font-size:22px;font-weight:900;color:var(--text);line-height:1}
+.today-ring-label{display:block;font-size:9px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}
+.today-info{flex:1;min-width:0}
+.today-info-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px}
+.today-info-desc{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.4}
+.today-info-stats{display:flex;gap:16px}
+.today-stat-mini{text-align:center}
+.today-stat-mini-num{display:block;font-size:18px;font-weight:900;color:var(--primary)}
+.today-stat-mini-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-top:2px;display:block}
+
+/* ==================== SECTION HEADER ==================== */
+.section-header{display:flex;justify-content:space-between;align-items:center;margin:24px 0 14px}
+.section-title{font-size:17px;font-weight:800;color:var(--text)}
+.section-action{background:none;border:none;color:var(--primary);font-size:12px;font-weight:700;cursor:pointer;padding:4px 8px;border-radius:8px;transition:.2s}
+.section-action:hover{background:var(--card)}
+
+/* ==================== RITUALS TODAY ==================== */
+.rituals-today{display:flex;flex-direction:column;gap:12px}
+.ritual-mini-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.ritual-mini-card:hover{border-color:var(--primary);transform:translateX(4px)}
+.ritual-mini-card.completed{opacity:.65;background:linear-gradient(135deg,rgba(74,222,128,.1),rgba(96,165,250,.05));border-color:rgba(74,222,128,.3)}
+.ritual-mini-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.ritual-mini-icon.morning{background:var(--grad-morning)}
+.ritual-mini-icon.afternoon{background:var(--grad-afternoon)}
+.ritual-mini-icon.evening{background:var(--grad-evening)}
+.ritual-mini-icon.mindfulness{background:linear-gradient(135deg,#4ade80,#60a5fa)}
+.ritual-mini-icon.fitness{background:linear-gradient(135deg,#fb923c,#f87171)}
+.ritual-mini-icon.learning{background:linear-gradient(135deg,#a78bfa,#60a5fa)}
+.ritual-mini-info{flex:1;min-width:0}
+.ritual-mini-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px}
+.ritual-mini-desc{font-size:12px;color:var(--text2);line-height:1.4}
+.ritual-mini-progress{font-size:11px;color:var(--primary);font-weight:700;margin-top:6px}
+.ritual-mini-arrow{color:var(--text3);font-size:20px;flex-shrink:0}
+.ritual-mini-card.completed .ritual-mini-arrow{color:var(--success)}
+
+/* ==================== QUICK ACTIONS ==================== */
+.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0}
+.quick-action-btn{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 6px;cursor:pointer;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.quick-action-btn:hover{border-color:var(--primary);background:var(--card2);transform:translateY(-3px)}
+.quick-action-icon{font-size:24px}
+.quick-action-label{font-size:10px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+
+/* ==================== DAILY QUOTE ==================== */
+.daily-quote{background:linear-gradient(135deg,rgba(192,132,252,.12),rgba(96,165,250,.08));border:1px solid rgba(192,132,252,.2);border-radius:20px;padding:22px;text-align:center;margin-top:8px;position:relative;overflow:hidden}
+.daily-quote::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:var(--grad-main);opacity:.08;border-radius:50%}
+.daily-quote-icon{font-size:28px;margin-bottom:10px;position:relative}
+.daily-quote-text{font-size:14px;line-height:1.7;color:var(--text);font-style:italic;font-weight:500;margin-bottom:8px;position:relative}
+.daily-quote-author{font-size:11px;color:var(--primary);font-weight:700;letter-spacing:1px;position:relative}
+
+/* ==================== RITUAL HEADER ==================== */
+.ritual-header-title{font-size:16px;font-weight:800;color:var(--text)}
+.ritual-header-sub{font-size:11px;color:var(--text3);margin-top:2px;font-weight:600}
 </style>
 </head>
 <body>
@@ -1906,5 +1992,3167 @@ input,select,textarea{font-family:inherit}
     <span>Journal</span>
   </button>
 </div>
+  <!-- ==================== MODAL: SETTINGS ==================== -->
+<div class="modal-bg" id="settingsModal">
+  <div class="modal">
+    <h3>⚙️ Settings</h3>
+    <label>Your Name</label>
+    <input id="settingsName" type="text" placeholder="Your name" maxlength="20" />
+    <label>Gemini API Key (AI ke liye)</label>
+    <p>Free key <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a> se milegi</p>
+    <input id="settingsApiKey" type="password" placeholder="AIza..." />
+    <label>Sound</label>
+    <select id="settingsSound">
+      <option value="on">🔊 On</option>
+      <option value="off">🔇 Off</option>
+    </select>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="fab-btn secondary w-full" onclick="exportData()">📤 Export</button>
+      <button class="fab-btn secondary w-full" onclick="document.getElementById('importFile').click()">📥 Import</button>
+      <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeSettings()">Cancel</button>
+      <button class="btn-primary" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: ADD HABIT ==================== -->
+<div class="modal-bg" id="addHabitModal">
+  <div class="modal">
+    <h3 id="addHabitTitle">➕ Naya Habit</h3>
+    <label>Habit Name</label>
+    <input id="habitNameInput" type="text" placeholder="jaise: 30 min walk" maxlength="50" />
+    <label>Emoji</label>
+    <div id="habitEmojiPicker" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+      <span data-emoji="🏃" class="emoji-opt selected" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid var(--primary);background:var(--card2)">🏃</span>
+      <span data-emoji="💪" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">💪</span>
+      <span data-emoji="📚" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">📚</span>
+      <span data-emoji="🧘" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">🧘</span>
+      <span data-emoji="💧" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">💧</span>
+      <span data-emoji="🥗" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">🥗</span>
+      <span data-emoji="😴" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">😴</span>
+      <span data-emoji="💻" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">💻</span>
+      <span data-emoji="🎯" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">🎯</span>
+      <span data-emoji="🙏" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">🙏</span>
+      <span data-emoji="❤️" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">❤️</span>
+      <span data-emoji="🌱" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">🌱</span>
+      <span data-emoji="⭐" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">⭐</span>
+      <span data-emoji="💰" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">💰</span>
+      <span data-emoji="✍️" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">✍️</span>
+      <span data-emoji="🎸" class="emoji-opt" style="font-size:26px;cursor:pointer;padding:8px;border-radius:12px;border:2px solid transparent">🎸</span>
+    </div>
+    <label>Type</label>
+    <select id="habitTypeSelect">
+      <option value="boolean">✓ Yes / No</option>
+      <option value="count">🔢 Counter</option>
+      <option value="duration">⏱ Duration (minutes)</option>
+    </select>
+    <label>Category</label>
+    <select id="habitCategorySelect">
+      <option value="morning">🌅 Morning</option>
+      <option value="afternoon">☀️ Afternoon</option>
+      <option value="evening">🌙 Evening</option>
+      <option value="fitness">💪 Fitness</option>
+      <option value="mindfulness">🧘 Mindfulness</option>
+      <option value="learning">📚 Learning</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeAddHabit()">Cancel</button>
+      <button class="btn-primary" onclick="saveNewHabit()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: FOCUS TIMER ==================== -->
+<div class="modal-bg" id="focusModal">
+  <div class="modal">
+    <h3>⏱️ Focus Timer</h3>
+    <div class="focus-timer-wrap">
+      <div class="focus-mode-tabs">
+        <button class="focus-mode-tab active" data-mode="focus" onclick="setFocusMode('focus')">Focus</button>
+        <button class="focus-mode-tab" data-mode="short" onclick="setFocusMode('short')">Short</button>
+        <button class="focus-mode-tab" data-mode="long" onclick="setFocusMode('long')">Long</button>
+      </div>
+      <div class="focus-timer-circle">
+        <svg width="260" height="260">
+          <defs>
+            <linearGradient id="focusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff6b9d"/>
+              <stop offset="100%" stop-color="#c084fc"/>
+            </linearGradient>
+          </defs>
+          <circle class="focus-ring-bg" cx="130" cy="130" r="115"/>
+          <circle class="focus-ring-fg" id="focusRingFg" cx="130" cy="130" r="115"
+            stroke-dasharray="722" stroke-dashoffset="0"/>
+        </svg>
+        <div class="focus-timer-text">
+          <div class="focus-time" id="focusTime">25:00</div>
+          <div class="focus-label" id="focusLabel">Focus</div>
+        </div>
+      </div>
+      <div class="focus-controls">
+        <button class="focus-btn secondary" onclick="resetFocusTimer()">↺</button>
+        <button class="focus-btn" id="focusStartBtn" onclick="toggleFocusTimer()">▶</button>
+        <button class="focus-btn secondary" onclick="closeFocusTimer()">✕</button>
+      </div>
+      <div class="focus-stats">
+        <div class="focus-stat">
+          <div class="focus-stat-num" id="focusSessionsToday">0</div>
+          <div class="focus-stat-lbl">Today</div>
+        </div>
+        <div class="focus-stat">
+          <div class="focus-stat-num" id="focusTotalMin">0</div>
+          <div class="focus-stat-lbl">Minutes</div>
+        </div>
+        <div class="focus-stat">
+          <div class="focus-stat-num" id="focusTotalSessions">0</div>
+          <div class="focus-stat-lbl">Total</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: BREATHING ==================== -->
+<div class="modal-bg" id="breatheModal">
+  <div class="modal">
+    <h3>🧘 Breathing</h3>
+    <div class="breathe-wrap">
+      <div class="breathe-patterns">
+        <div class="breathe-pattern active" data-pattern="calm" onclick="setBreathePattern('calm')">
+          <span class="icon">🌊</span>
+          <div class="name">Calm</div>
+          <div class="time">4-4-4-4</div>
+        </div>
+        <div class="breathe-pattern" data-pattern="relax" onclick="setBreathePattern('relax')">
+          <span class="icon">😌</span>
+          <div class="name">Relax</div>
+          <div class="time">4-7-8</div>
+        </div>
+        <div class="breathe-pattern" data-pattern="energy" onclick="setBreathePattern('energy')">
+          <span class="icon">⚡</span>
+          <div class="name">Energy</div>
+          <div class="time">6-2-6</div>
+        </div>
+      </div>
+      <div class="breathe-circle" id="breatheCircle">
+        <div class="breathe-text">
+          <span class="breathe-counter" id="breatheCounter">4</span>
+          <span id="breathePhase">Inhale</span>
+        </div>
+      </div>
+      <p class="breathe-info" id="breatheInfo">Circle ke saath saans lein. Relax karein.</p>
+      <div class="focus-controls">
+        <button class="focus-btn" id="breatheStartBtn" onclick="toggleBreathing()">▶</button>
+        <button class="focus-btn secondary" onclick="closeBreathing()">✕</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: WATER ==================== -->
+<div class="modal-bg" id="waterModal">
+  <div class="modal">
+    <h3>💧 Water Tracker</h3>
+    <p>Aaj ka paani track karein — 8 glasses target</p>
+    <div class="water-grid" id="waterGrid"></div>
+    <div style="text-align:center;font-size:32px;font-weight:900;margin:16px 0;background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="waterCount">0 / 8</div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="resetWater()">Reset</button>
+      <button class="btn-primary" onclick="closeWater()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: JOURNAL ==================== -->
+<div class="modal-bg" id="journalModal">
+  <div class="modal">
+    <h3>📔 Aaj ka Journal</h3>
+    <p id="journalDateLabel"></p>
+    <label>Mood</label>
+    <div class="mood-row" id="journalMoodRow">
+      <button class="mood-btn" data-mood="1">😢</button>
+      <button class="mood-btn" data-mood="2">😐</button>
+      <button class="mood-btn" data-mood="3">🙂</button>
+      <button class="mood-btn" data-mood="4">😊</button>
+      <button class="mood-btn" data-mood="5">🤩</button>
+    </div>
+    <label>Aaj kya hua?</label>
+    <textarea id="journalTextInput" rows="4" placeholder="Aaj ka din kaisa raha..."></textarea>
+    <label>Gratitude (3 cheezein)</label>
+    <textarea id="journalGratitudeInput" rows="3" placeholder="1.&#10;2.&#10;3."></textarea>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeJournalModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveJournal()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: RITUAL STEP ==================== -->
+<div class="modal-bg" id="stepModal">
+  <div class="modal">
+    <h3 id="stepModalTitle">Step</h3>
+    <p id="stepModalDesc">Complete this step</p>
+    <div id="stepModalContent"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeStepModal()">Close</button>
+      <button class="btn-primary" onclick="completeStepFromModal()">Complete ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FAB (Add Button) ==================== -->
+<button class="fab hidden" id="fabAdd" onclick="openAddHabit()" title="Add Habit">+</button>
+
+<!-- ==================== TOAST ==================== -->
+<div class="toast" id="toast"></div>
+<script>
+/* ============================================================
+   FABULOUS CLONE — JAVASCRIPT ENGINE
+   Part 7: State, Constants, Utilities, Onboarding
+   ============================================================ */
+
+/* ==================== STATE ==================== */
+const STORAGE_KEY = 'fabulous_app_v1';
+const TODAY = new Date().toISOString().slice(0, 10);
+
+let state = {
+  name: '',
+  wakeTime: '07:00',
+  goals: [],
+  onboarded: false,
+  habits: [],
+  log: {},
+  progress: {},
+  journal: {},
+  water: {},
+  mood: {},
+  focusSessions: [],
+  apiKey: '',
+  sound: 'on',
+  currentHeatmap: 90,
+  activeJourney: null
+};
+
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) state = Object.assign({}, state, JSON.parse(saved));
+} catch (e) { console.error('Load error:', e); }
+
+function save() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.error('Save error:', e);
+  }
+}
+
+/* ==================== CONSTANTS ==================== */
+const QUOTES = [
+  { text: 'Small steps every day lead to big changes.', author: 'Fabulous' },
+  { text: 'You don\'t have to be great to start, but you have to start to be great.', author: 'Zig Ziglar' },
+  { text: 'Discipline is choosing between what you want now and what you want most.', author: 'Abraham Lincoln' },
+  { text: 'The secret of getting ahead is getting started.', author: 'Mark Twain' },
+  { text: 'Motivation is what gets you started. Habit is what keeps you going.', author: 'Jim Ryun' },
+  { text: 'A journey of a thousand miles begins with a single step.', author: 'Lao Tzu' },
+  { text: 'We are what we repeatedly do. Excellence is a habit.', author: 'Aristotle' },
+  { text: 'Your future is created by what you do today, not tomorrow.', author: 'Robert Kiyosaki' },
+  { text: 'The best time to plant a tree was 20 years ago. The second best time is now.', author: 'Chinese Proverb' },
+  { text: 'Progress, not perfection.', author: 'Fabulous' }
+];
+
+const JOURNEYS = [
+  {
+    id: 'morning',
+    title: 'Morning Ritual',
+    desc: 'Start your day with energy and clarity',
+    icon: '🌅',
+    color: 'morning',
+    duration: '7 days',
+    steps: [
+      { icon: '💧', title: 'Drink water', desc: 'Ek glass paani subah uth kar', duration: '1 min' },
+      { icon: '🧘', title: 'Stretch', desc: '5 minute stretching', duration: '5 min' },
+      { icon: '🙏', title: 'Gratitude', desc: '3 cheezein likhein', duration: '3 min' },
+      { icon: '☀️', title: 'Sunlight', desc: '5 minute dhoop mein', duration: '5 min' },
+      { icon: '📔', title: 'Plan day', desc: 'Top 3 tasks likhein', duration: '3 min' }
+    ]
+  },
+  {
+    id: 'fitness',
+    title: 'Get Fit',
+    desc: 'Build strength and energy with daily movement',
+    icon: '💪',
+    color: 'fitness',
+    duration: '30 days',
+    steps: [
+      { icon: '🏃', title: 'Morning walk', desc: '15 minute walk', duration: '15 min' },
+      { icon: '💪', title: 'Pushups', desc: '20 pushups', duration: '5 min' },
+      { icon: '🧘', title: 'Yoga', desc: '10 minute yoga', duration: '10 min' },
+      { icon: '💧', title: 'Hydrate', desc: '8 glass paani', duration: 'All day' }
+    ]
+  },
+  {
+    id: 'mindfulness',
+    title: 'Mindfulness',
+    desc: 'Find calm and focus in your daily life',
+    icon: '🧘',
+    color: 'mindfulness',
+    duration: '14 days',
+    steps: [
+      { icon: '🌬️', title: 'Breathe', desc: '5 minute breathing', duration: '5 min' },
+      { icon: '🧘', title: 'Meditate', desc: '10 minute meditation', duration: '10 min' },
+      { icon: '📔', title: 'Journal', desc: 'Aaj ka reflection', duration: '5 min' },
+      { icon: '🌙', title: 'Wind down', desc: 'No screens before bed', duration: 'Evening' }
+    ]
+  },
+  {
+    id: 'evening',
+    title: 'Evening Ritual',
+    desc: 'Unwind and prepare for tomorrow',
+    icon: '🌙',
+    color: 'evening',
+    duration: '7 days',
+    steps: [
+      { icon: '📚', title: 'Read', desc: '15 minute reading', duration: '15 min' },
+      { icon: '📔', title: 'Journal', desc: 'Aaj ka din kaise tha', duration: '5 min' },
+      { icon: '📱', title: 'Phone off', desc: 'Bed se 1 ghanta pehle', duration: '1 hr' },
+      { icon: '😴', title: 'Sleep', desc: '10 baje se pehle', duration: 'Night' }
+    ]
+  },
+  {
+    id: 'learning',
+    title: 'Learn More',
+    desc: 'Grow your mind with daily learning',
+    icon: '📚',
+    color: 'learning',
+    duration: '21 days',
+    steps: [
+      { icon: '📚', title: 'Read book', desc: '20 minute reading', duration: '20 min' },
+      { icon: '✍️', title: 'Learn skill', desc: 'Online course', duration: '30 min' },
+      { icon: '🎧', title: 'Podcast', desc: 'Educational podcast', duration: '15 min' },
+      { icon: '📝', title: 'Notes', desc: 'Aaj ki seekhi cheezein likhein', duration: '5 min' }
+    ]
+  },
+  {
+    id: 'afternoon',
+    title: 'Afternoon Boost',
+    desc: 'Beat the slump and stay productive',
+    icon: '☀️',
+    color: 'afternoon',
+    duration: '5 days',
+    steps: [
+      { icon: '🚶', title: 'Walk', desc: '10 minute walk', duration: '10 min' },
+      { icon: '💧', title: 'Water break', desc: 'Paani piyein', duration: '1 min' },
+      { icon: '🍎', title: 'Healthy snack', desc: 'Fruits ya nuts', duration: '5 min' },
+      { icon: '🧠', title: 'Focus block', desc: '25 min deep work', duration: '25 min' }
+    ]
+  }
+];
+
+const ACHIEVEMENTS = [
+  { id: 'first_step', icon: '👶', name: 'First Step', desc: '1 step complete' },
+  { id: 'first_day', icon: '🎯', name: 'First Day', desc: '1 ritual complete' },
+  { id: 'streak_3', icon: '🔥', name: '3-Day Streak', desc: '3 din lagatar' },
+  { id: 'streak_7', icon: '⚡', name: 'Week Warrior', desc: '7 din lagatar' },
+  { id: 'streak_30', icon: '🏆', name: 'Month Master', desc: '30 din lagatar' },
+  { id: 'streak_100', icon: '👑', name: 'Centurion', desc: '100 din lagatar' },
+  { id: 'water_master', icon: '💧', name: 'Water Master', desc: '7 din 8 glass paani' },
+  { id: 'journal_7', icon: '📔', name: 'Journalist', desc: '7 journal entries' },
+  { id: 'focus_10', icon: '⏱️', name: 'Focus Pro', desc: '10 focus sessions' },
+  { id: 'breathe_20', icon: '🧘', name: 'Zen Master', desc: '20 breathing sessions' },
+  { id: 'perfect_week', icon: '💯', name: 'Perfect Week', desc: 'Poora hafta perfect' },
+  { id: 'all_journeys', icon: '🗺️', name: 'Explorer', desc: 'Saari journeys try' }
+];
+
+const SOUNDS = {
+  complete: { freq: 800, duration: 0.15 },
+  celebrate: { freq: 1000, duration: 0.3 },
+  error: { freq: 300, duration: 0.2 },
+  click: { freq: 600, duration: 0.05 },
+  success: { freq: 900, duration: 0.2 }
+};
+
+/* ==================== UTILITIES ==================== */
+function dateKey(d) {
+  d = d || new Date();
+  return d.toISOString().slice(0, 10);
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+function showToast(msg, isError, isInfo) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : isInfo ? ' info' : '');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => {
+    t.className = 'toast';
+  }, 2800);
+}
+
+function playSound(type) {
+  if (state.sound === 'off') return;
+  const s = SOUNDS[type] || SOUNDS.click;
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.frequency.value = s.freq;
+    gain.gain.value = 0.08;
+    osc.type = 'sine';
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + s.duration);
+    osc.stop(ctx.currentTime + s.duration);
+  } catch (e) {}
+}
+
+function vibrate(pattern) {
+  if ('vibrate' in navigator) {
+    try { navigator.vibrate(pattern || 20); } catch (e) {}
+  }
+}
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 5) return 'Late night';
+  if (h < 12) return 'Good morning';
+  if (h < 17) return 'Good afternoon';
+  if (h < 20) return 'Good evening';
+  return 'Good night';
+}
+
+function getRandomQuote() {
+  return QUOTES[Math.floor(Math.random() * QUOTES.length)];
+}
+
+/* ==================== ONBOARDING ==================== */
+let currentOnboardStep = 0;
+let selectedGoals = [];
+
+function nextOnboardStep() {
+  if (currentOnboardStep === 1) {
+    const nameInput = document.getElementById('onboardNameInput');
+    const name = nameInput ? nameInput.value.trim() : '';
+    if (name) state.name = name;
+  }
+
+  if (currentOnboardStep === 2) {
+    state.goals = selectedGoals.slice();
+  }
+
+  currentOnboardStep++;
+
+  if (currentOnboardStep >= 5) {
+    finishOnboarding();
+    return;
+  }
+
+  showOnboardStep(currentOnboardStep);
+  playSound('click');
+  vibrate(15);
+}
+
+function showOnboardStep(step) {
+  const steps = document.querySelectorAll('.onboard-step');
+  steps.forEach((el, i) => {
+    el.classList.toggle('active', i === step);
+  });
+
+  const onboarding = document.getElementById('onboarding');
+  if (onboarding) onboarding.scrollTop = 0;
+}
+
+function adjustWakeTime(minutes) {
+  const display = document.getElementById('wakeTimeValue');
+  if (!display) return;
+
+  let parts = (state.wakeTime || '07:00').split(':');
+  let h = parseInt(parts[0]) || 7;
+  let m = parseInt(parts[1]) || 0;
+  let total = h * 60 + m + minutes;
+
+  if (total < 0) total += 24 * 60;
+  if (total >= 24 * 60) total -= 24 * 60;
+
+  h = Math.floor(total / 60);
+  m = total % 60;
+  state.wakeTime = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  display.textContent = state.wakeTime;
+
+  playSound('click');
+  vibrate(10);
+}
+
+function finishOnboarding() {
+  state.onboarded = true;
+  save();
+
+  const onboarding = document.getElementById('onboarding');
+  if (onboarding) onboarding.classList.remove('show');
+
+  const mainApp = document.getElementById('mainApp');
+  const bottomNav = document.getElementById('bottomNav');
+  const fab = document.getElementById('fabAdd');
+  if (mainApp) mainApp.classList.remove('hidden');
+  if (bottomNav) bottomNav.classList.remove('hidden');
+  if (fab) fab.classList.remove('hidden');
+
+  initApp();
+
+  playSound('celebrate');
+  vibrate([50, 30, 50]);
+  showToast('Welcome to Fabulous! ✨');
+}
+
+function initGoalCards() {
+  document.querySelectorAll('.goal-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const goal = card.dataset.goal;
+      if (!goal) return;
+
+      if (card.classList.contains('selected')) {
+        card.classList.remove('selected');
+        selectedGoals = selectedGoals.filter(g => g !== goal);
+      } else {
+        card.classList.add('selected');
+        if (!selectedGoals.includes(goal)) {
+          selectedGoals.push(goal);
+        }
+      }
+
+      playSound('click');
+      vibrate(10);
+    });
+  });
+}
+
+function initNameInput() {
+  const input = document.getElementById('onboardNameInput');
+  const nextBtn = document.getElementById('nameNextBtn');
+  if (!input || !nextBtn) return;
+
+  input.addEventListener('input', () => {
+    const hasText = input.value.trim().length > 0;
+    nextBtn.disabled = !hasText;
+  });
+
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && input.value.trim()) {
+      nextOnboardStep();
+    }
+  });
+}
+
+function hideSplashScreen() {
+  const splash = document.getElementById('splashScreen');
+  if (!splash) return;
+
+  setTimeout(() => {
+    splash.classList.add('hide');
+    setTimeout(() => {
+      splash.style.display = 'none';
+      startAppFlow();
+    }, 600);
+  }, 1800);
+}
+
+function startAppFlow() {
+  if (state.onboarded) {
+    const mainApp = document.getElementById('mainApp');
+    const bottomNav = document.getElementById('bottomNav');
+    const fab = document.getElementById('fabAdd');
+    if (mainApp) mainApp.classList.remove('hidden');
+    if (bottomNav) bottomNav.classList.remove('hidden');
+    if (fab) fab.classList.remove('hidden');
+    initApp();
+  } else {
+    const onboarding = document.getElementById('onboarding');
+    if (onboarding) onboarding.classList.add('show');
+    showOnboardStep(0);
+  }
+}
+
+function initApp() {
+  updateHomeGreeting();
+  updateDailyQuote();
+  renderRitualsToday();
+  renderJourneys();
+  renderStats();
+  renderJournal();
+  renderHomeProgress();
+  console.log('App initialized');
+}
+
+function updateHomeGreeting() {
+  const timeEl = document.getElementById('homeGreetTime');
+  const nameEl = document.getElementById('homeGreetName');
+
+  if (timeEl) timeEl.textContent = getGreeting();
+  if (nameEl) nameEl.textContent = state.name || 'Friend';
+}
+
+function updateDailyQuote() {
+  const textEl = document.getElementById('dailyQuoteText');
+  const authorEl = document.getElementById('dailyQuoteAuthor');
+  if (!textEl || !authorEl) return;
+
+  const q = getRandomQuote();
+  textEl.textContent = q.text;
+  authorEl.textContent = '— ' + q.author;
+}
+
+function renderHomeProgress() {
+  const doneToday = state.log[TODAY] || [];
+  const totalHabits = state.habits.length;
+
+  const percentEl = document.getElementById('todayRingPercent');
+  const ringEl = document.getElementById('todayRingFg');
+  const doneEl = document.getElementById('todayDone');
+  const totalEl = document.getElementById('todayTotal');
+  const streakEl = document.getElementById('todayStreak');
+  const descEl = document.getElementById('todayInfoDesc');
+
+  const percent = totalHabits > 0
+    ? Math.round((doneToday.length / totalHabits) * 100)
+    : 0;
+
+  if (percentEl) percentEl.textContent = percent + '%';
+  if (doneEl) doneEl.textContent = doneToday.length;
+  if (totalEl) totalEl.textContent = totalHabits;
+
+  if (ringEl) {
+    const offset = 327 - (327 * percent / 100);
+    ringEl.style.strokeDashoffset = offset;
+  }
+
+  const bestStreak = totalHabits > 0
+    ? Math.max.apply(null, state.habits.map(h => getHabitStreak(h.id)))
+    : 0;
+  if (streakEl) streakEl.textContent = bestStreak;
+
+  if (descEl) {
+    if (totalHabits === 0) {
+      descEl.textContent = 'Shuru karein apna pehla ritual';
+    } else if (percent === 100) {
+      descEl.textContent = 'Sab complete! Shabash!';
+    } else if (percent >= 50) {
+      descEl.textContent = 'Achha ja rahe hain, continue karein!';
+    } else {
+      descEl.textContent = (totalHabits - doneToday.length) + ' baaki hain';
+    }
+  }
+}
+
+function getHabitStreak(habitId) {
+  let streak = 0;
+  let d = new Date();
+  const doneToday = (state.log[TODAY] || []).includes(habitId);
+  if (!doneToday) d.setDate(d.getDate() - 1);
+
+  let safety = 0;
+  while (safety++ < 3650) {
+    const key = dateKey(d);
+    if ((state.log[key] || []).includes(habitId)) {
+      streak++;
+      d.setDate(d.getDate() - 1);
+    } else break;
+  }
+  return streak;
+}
+
+function renderRitualsToday() {
+  const container = document.getElementById('ritualsToday');
+  if (!container) return;
+
+  if (state.habits.length === 0) {
+    container.innerHTML = '<div class="empty"><span class="empty-icon">✨</span>Abhi koi ritual nahi.<br>Neeche + button se add karein.</div>';
+    return;
+  }
+
+  container.innerHTML = '<div class="empty">Loading rituals...</div>';
+}
+
+function renderJourneys() {
+  const grid = document.getElementById('journeysGrid');
+  if (!grid) return;
+
+  grid.innerHTML = JOURNEYS.map(j =>
+    '<div class="journey-card ' + j.color + '" onclick="openJourney(\'' + j.id + '\')">' +
+      '<div class="journey-content">' +
+        '<div class="journey-icon">' + j.icon + '</div>' +
+        '<div class="journey-title">' + escapeHtml(j.title) + '</div>' +
+        '<div class="journey-desc">' + escapeHtml(j.desc) + '</div>' +
+      '</div>' +
+      '<div class="journey-meta">' +
+        '<span class="journey-duration">' + j.duration + '</span>' +
+        '<span class="journey-progress">' + j.steps.length + ' steps</span>' +
+      '</div>' +
+    '</div>'
+  ).join('');
+}
+
+function renderStats() {
+  const overview = document.getElementById('statsOverview');
+  if (overview) {
+    overview.innerHTML = '<div class="empty">Stats loading...</div>';
+  }
+}
+
+function renderJournal() {
+  const history = document.getElementById('journalHistory');
+  if (history) {
+    history.innerHTML = '<div class="empty">Journal loading...</div>';
+  }
+}
+
+function openJourney(id) {
+  showToast('Journey: ' + id + ' (Part 8 mein aayega)', false, true);
+}
+
+function switchPage(page, ev) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+
+  if (ev && ev.target) {
+    const navBtn = ev.target.closest('.nav-item');
+    if (navBtn) navBtn.classList.add('active');
+  }
+
+  if (page === 'stats') renderStats();
+  if (page === 'journal') renderJournal();
+  if (page === 'journeys') renderJourneys();
+
+  playSound('click');
+  vibrate(10);
+}
+
+function openSettings() {
+  const modal = document.getElementById('settingsModal');
+  if (!modal) return;
+
+  const nameEl = document.getElementById('settingsName');
+  const apiEl = document.getElementById('settingsApiKey');
+  const soundEl = document.getElementById('settingsSound');
+
+  if (nameEl) nameEl.value = state.name || '';
+  if (apiEl) apiEl.value = state.apiKey || '';
+  if (soundEl) soundEl.value = state.sound || 'on';
+
+  modal.classList.add('show');
+  playSound('click');
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.remove('show');
+}
+
+function saveSettings() {
+  const name = document.getElementById('settingsName').value.trim();
+  const apiKey = document.getElementById('settingsApiKey').value.trim();
+  const sound = document.getElementById('settingsSound').value;
+
+  state.name = name;
+  state.apiKey = apiKey;
+  state.sound = sound;
+  save();
+
+  closeSettings();
+  updateHomeGreeting();
+  showToast('Settings saved');
+  playSound('success');
+}
+
+function openAddHabit() {
+  const modal = document.getElementById('addHabitModal');
+  if (!modal) return;
+
+  document.getElementById('habitNameInput').value = '';
+  modal.classList.add('show');
+  playSound('click');
+}
+
+function closeAddHabit() {
+  document.getElementById('addHabitModal').classList.remove('show');
+}
+
+function saveNewHabit() {
+  showToast('Part 8 mein aayega', false, true);
+  closeAddHabit();
+}
+
+function openFocusTimer() {
+  showToast('Focus Timer — Part 9 mein', false, true);
+}
+
+function openBreathing() {
+  showToast('Breathing — Part 9 mein', false, true);
+}
+
+function openWaterTracker() {
+  showToast('Water Tracker — Part 9 mein', false, true);
+}
+
+function openJournal() {
+  openJournalModal();
+}
+
+function openJournalModal() {
+  showToast('Journal — Part 10 mein', false, true);
+}
+
+function exportData() {
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'fabulous-backup-' + TODAY + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Data exported');
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!confirm('Purana data replace ho jayega. Continue?')) return;
+      state = Object.assign({}, state, data);
+      save();
+      initApp();
+      showToast('Data imported');
+    } catch (err) {
+      showToast('Invalid file', true);
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ==================== INITIALIZATION ==================== */
+document.addEventListener('DOMContentLoaded', () => {
+  initGoalCards();
+  initNameInput();
+
+  const wakeDisplay = document.getElementById('wakeTimeValue');
+  if (wakeDisplay) wakeDisplay.textContent = state.wakeTime || '07:00';
+
+  hideSplashScreen();
+
+  document.querySelectorAll('.modal-bg').forEach(m => {
+    m.addEventListener('click', e => {
+      if (e.target === m) m.classList.remove('show');
+    });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-bg.show').forEach(m => m.classList.remove('show'));
+    }
+  });
+});
+<script>
+/* ============================================================
+   FABULOUS CLONE — Part 8
+   Habits CRUD + Rituals Check-in + Streaks + Achievements
+   ============================================================ */
+
+/* ==================== HABIT MANAGEMENT ==================== */
+
+// Override Part 7's placeholder
+window.saveNewHabit = function() {
+  const nameInput = document.getElementById('habitNameInput');
+  const typeSelect = document.getElementById('habitTypeSelect');
+  const catSelect = document.getElementById('habitCategorySelect');
+  const emojiPicker = document.getElementById('habitEmojiPicker');
+
+  if (!nameInput) return;
+
+  const name = nameInput.value.trim();
+  if (!name) {
+    showToast('Habit ka naam likhein!', true);
+    playSound('error');
+    vibrate(100);
+    return;
+  }
+
+  // Get selected emoji
+  let emoji = '🎯';
+  if (emojiPicker) {
+    const selected = emojiPicker.querySelector('.emoji-opt.selected');
+    if (selected && selected.dataset.emoji) {
+      emoji = selected.dataset.emoji;
+    }
+  }
+
+  const type = typeSelect ? typeSelect.value : 'boolean';
+  const category = catSelect ? catSelect.value : 'morning';
+
+  const habit = {
+    id: Date.now() + Math.floor(Math.random() * 1000),
+    name: name,
+    emoji: emoji,
+    type: type,
+    category: category,
+    target: type === 'count' ? 8 : type === 'duration' ? 30 : 1,
+    createdAt: TODAY,
+    order: state.habits.length
+  };
+
+  state.habits.push(habit);
+  save();
+
+  closeAddHabit();
+  renderRitualsToday();
+  renderHomeProgress();
+
+  playSound('success');
+  vibrate([30, 20, 30]);
+  showToast('Habit add ho gaya! 🎉');
+};
+
+// Override Part 7's placeholder
+window.renderRitualsToday = function() {
+  const container = document.getElementById('ritualsToday');
+  if (!container) return;
+
+  const doneToday = state.log[TODAY] || [];
+  const activeHabits = state.habits.filter(h => !h.archived);
+
+  if (activeHabits.length === 0) {
+    container.innerHTML =
+      '<div class="empty">' +
+        '<span class="empty-icon">✨</span>' +
+        'Abhi koi ritual nahi.<br>' +
+        'Neeche + button se add karein.' +
+      '</div>';
+    return;
+  }
+
+  // Sort: pending first, then by category order
+  const catOrder = ['morning', 'afternoon', 'evening', 'fitness', 'mindfulness', 'learning'];
+  activeHabits.sort((a, b) => {
+    const aDone = doneToday.includes(a.id) ? 1 : 0;
+    const bDone = doneToday.includes(b.id) ? 1 : 0;
+    if (aDone !== bDone) return aDone - bDone;
+    return catOrder.indexOf(a.category) - catOrder.indexOf(b.category);
+  });
+
+  container.innerHTML = activeHabits.map(h => {
+    const done = doneToday.includes(h.id);
+    const streak = getHabitStreak(h.id);
+
+    // Progress for counter/duration
+    let progressTxt = '';
+    if (h.type === 'count' && !done) {
+      const cur = (state.progress[TODAY] && state.progress[TODAY][h.id]) || 0;
+      progressTxt = '<div class="ritual-mini-progress">' + cur + ' / ' + h.target + ' complete</div>';
+    } else if (h.type === 'duration' && !done) {
+      const cur = (state.progress[TODAY] && state.progress[TODAY][h.id]) || 0;
+      progressTxt = '<div class="ritual-mini-progress">' + cur + ' / ' + h.target + ' min</div>';
+    } else if (done) {
+      progressTxt = '<div class="ritual-mini-progress">✓ Complete' + (streak > 0 ? ' • 🔥 ' + streak + ' din' : '') + '</div>';
+    } else if (streak > 0) {
+      progressTxt = '<div class="ritual-mini-progress">🔥 ' + streak + ' din streak</div>';
+    }
+
+    const typeBadge = h.type === 'count' ? ' 🔢' : h.type === 'duration' ? ' ⏱️' : '';
+
+    return (
+      '<div class="ritual-mini-card ' + (done ? 'completed' : '') + '" onclick="handleHabitClick(' + h.id + ')">' +
+        '<div class="ritual-mini-icon ' + (h.category || 'morning') + '">' + (h.emoji || '🎯') + '</div>' +
+        '<div class="ritual-mini-info">' +
+          '<div class="ritual-mini-title">' + escapeHtml(h.name) + typeBadge + '</div>' +
+          '<div class="ritual-mini-desc">' + (h.category || 'ritual') + '</div>' +
+          progressTxt +
+        '</div>' +
+        '<div class="ritual-mini-arrow">' + (done ? '✓' : '›') + '</div>' +
+      '</div>'
+    );
+  }).join('');
+};
+
+/* ==================== HABIT CHECK-IN ==================== */
+
+window.handleHabitClick = function(habitId) {
+  const habit = state.habits.find(h => h.id === habitId);
+  if (!habit) return;
+
+  const doneToday = state.log[TODAY] || [];
+  const isDone = doneToday.includes(habitId);
+
+  // If already done, uncheck
+  if (isDone) {
+    state.log[TODAY] = doneToday.filter(id => id !== habitId);
+    if (state.progress[TODAY]) {
+      delete state.progress[TODAY][habitId];
+    }
+    save();
+    renderRitualsToday();
+    renderHomeProgress();
+    playSound('click');
+    vibrate(20);
+    showToast('Unchecked', false, true);
+    return;
+  }
+
+  // For counter type
+  if (habit.type === 'count') {
+    if (!state.progress[TODAY]) state.progress[TODAY] = {};
+    const cur = state.progress[TODAY][habitId] || 0;
+    const next = cur + 1;
+
+    if (next >= habit.target) {
+      // Mark complete
+      if (!state.log[TODAY]) state.log[TODAY] = [];
+      state.log[TODAY].push(habitId);
+      state.progress[TODAY][habitId] = habit.target;
+      save();
+      renderRitualsToday();
+      renderHomeProgress();
+      checkAchievements();
+      playSound('complete');
+      vibrate([50, 30, 50]);
+      showToast('🎉 ' + habit.name + ' complete!');
+      checkAllComplete();
+    } else {
+      state.progress[TODAY][habitId] = next;
+      save();
+      renderRitualsToday();
+      playSound('click');
+      vibrate(20);
+    }
+    return;
+  }
+
+  // For duration type — show step modal to start timer
+  if (habit.type === 'duration') {
+    openDurationTimer(habitId);
+    return;
+  }
+
+  // For boolean type — just check complete
+  if (!state.log[TODAY]) state.log[TODAY] = [];
+  state.log[TODAY].push(habitId);
+  save();
+  renderRitualsToday();
+  renderHomeProgress();
+  checkAchievements();
+  playSound('complete');
+  vibrate([50, 30, 50]);
+  showToast('✓ ' + habit.name + ' complete!');
+  checkAllComplete();
+};
+
+/* ==================== DURATION TIMER (Simple) ==================== */
+
+let durationTimerState = {
+  habitId: null,
+  seconds: 0,
+  interval: null,
+  running: false
+};
+
+window.openDurationTimer = function(habitId) {
+  const habit = state.habits.find(h => h.id === habitId);
+  if (!habit) return;
+
+  durationTimerState.habitId = habitId;
+  const savedMin = (state.progress[TODAY] && state.progress[TODAY][habitId]) || 0;
+  durationTimerState.seconds = savedMin * 60;
+  durationTimerState.running = false;
+
+  // Reuse stepModal for timer
+  const title = document.getElementById('stepModalTitle');
+  const desc = document.getElementById('stepModalDesc');
+  const content = document.getElementById('stepModalContent');
+  const modal = document.getElementById('stepModal');
+
+  if (!title || !desc || !content || !modal) return;
+
+  title.textContent = (habit.emoji || '⏱️') + ' ' + habit.name;
+  desc.textContent = 'Target: ' + habit.target + ' minutes';
+
+  content.innerHTML =
+    '<div style="text-align:center;margin:20px 0">' +
+      '<div id="durationTimerDisplay" style="font-size:56px;font-weight:900;background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums">' +
+        formatDuration(durationTimerState.seconds) +
+      '</div>' +
+    '</div>' +
+    '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px">' +
+      '<button class="fab-btn secondary" onclick="resetDurationTimer()" style="flex:1">↺ Reset</button>' +
+      '<button class="fab-btn" id="durationToggleBtn" onclick="toggleDurationTimer()" style="flex:1">▶ Start</button>' +
+    '</div>';
+
+  // Change the modal's Complete button to "Save Progress"
+  const completeBtn = modal.querySelector('.btn-primary');
+  if (completeBtn) {
+    completeBtn.textContent = 'Save Progress';
+    completeBtn.onclick = saveDurationProgress;
+  }
+
+  modal.classList.add('show');
+  playSound('click');
+};
+
+window.formatDuration = function(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+};
+
+window.toggleDurationTimer = function() {
+  const btn = document.getElementById('durationToggleBtn');
+  if (!btn) return;
+
+  if (durationTimerState.running) {
+    clearInterval(durationTimerState.interval);
+    durationTimerState.running = false;
+    btn.textContent = '▶ Resume';
+  } else {
+    durationTimerState.running = true;
+    btn.textContent = '⏸ Pause';
+    durationTimerState.interval = setInterval(() => {
+      durationTimerState.seconds++;
+      const disp = document.getElementById('durationTimerDisplay');
+      if (disp) disp.textContent = formatDuration(durationTimerState.seconds);
+    }, 1000);
+  }
+  playSound('click');
+  vibrate(15);
+};
+
+window.resetDurationTimer = function() {
+  clearInterval(durationTimerState.interval);
+  durationTimerState.running = false;
+  durationTimerState.seconds = 0;
+  const disp = document.getElementById('durationTimerDisplay');
+  if (disp) disp.textContent = '00:00';
+  const btn = document.getElementById('durationToggleBtn');
+  if (btn) btn.textContent = '▶ Start';
+  playSound('click');
+};
+
+window.saveDurationProgress = function() {
+  clearInterval(durationTimerState.interval);
+  durationTimerState.running = false;
+
+  const habitId = durationTimerState.habitId;
+  const habit = state.habits.find(h => h.id === habitId);
+  if (!habit) {
+    closeStepModal();
+    return;
+  }
+
+  const mins = Math.floor(durationTimerState.seconds / 60);
+  if (!state.progress[TODAY]) state.progress[TODAY] = {};
+  state.progress[TODAY][habitId] = mins;
+
+  if (mins >= habit.target) {
+    if (!state.log[TODAY]) state.log[TODAY] = [];
+    if (!state.log[TODAY].includes(habitId)) {
+      state.log[TODAY].push(habitId);
+    }
+    checkAchievements();
+    playSound('complete');
+    vibrate([50, 30, 50]);
+    showToast('🎉 ' + mins + ' min complete!');
+    checkAllComplete();
+  } else if (mins > 0) {
+    showToast(mins + ' min save ho gaye');
+    playSound('success');
+  }
+
+  save();
+  closeStepModal();
+  renderRitualsToday();
+  renderHomeProgress();
+};
+
+/* ==================== RITUAL DETAIL (Journey Open) ==================== */
+
+window.openJourney = function(journeyId) {
+  const journey = JOURNEYS.find(j => j.id === journeyId);
+  if (!journey) return;
+
+  // Show ritual page
+  switchPage('ritual');
+
+  const titleEl = document.getElementById('ritualHeaderTitle');
+  const subEl = document.getElementById('ritualHeaderSub');
+  const content = document.getElementById('ritualContent');
+  if (!content) return;
+
+  // Header
+  if (titleEl) titleEl.textContent = journey.icon + ' ' + journey.title;
+
+  // Get completion status of steps
+  const doneToday = state.log[TODAY] || [];
+  const journeySteps = journey.steps.map((s, i) => {
+    const stepId = journeyId + '_step_' + i;
+    return {
+      ...s,
+      id: stepId,
+      done: doneToday.includes(stepId)
+    };
+  });
+
+  const doneCount = journeySteps.filter(s => s.done).length;
+  if (subEl) subEl.textContent = doneCount + ' of ' + journeySteps.length + ' done';
+
+  // Render content
+  content.innerHTML =
+    '<div class="ritual-hero ' + journey.color + '">' +
+      '<div class="ritual-hero-content">' +
+        '<span class="ritual-hero-icon">' + journey.icon + '</span>' +
+        '<div class="ritual-hero-title">' + escapeHtml(journey.title) + '</div>' +
+        '<div class="ritual-hero-desc">' + escapeHtml(journey.desc) + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="ritual-steps">' +
+      journeySteps.map(s =>
+        '<div class="ritual-step ' + (s.done ? 'done' : '') + '" onclick="toggleJourneyStep(\'' + journeyId + '\', ' + journeySteps.indexOf(s) + ')">' +
+          '<div class="step-icon">' + s.icon + '</div>' +
+          '<div class="step-info">' +
+            '<div class="step-title">' + escapeHtml(s.title) + '</div>' +
+            '<div class="step-desc">' + escapeHtml(s.desc) + '</div>' +
+            '<span class="step-duration">' + s.duration + '</span>' +
+          '</div>' +
+          '<div class="step-check">' + (s.done ? '✓' : '') + '</div>' +
+        '</div>'
+      ).join('') +
+    '</div>' +
+    (doneCount === journeySteps.length
+      ? '<div class="ritual-complete-card">' +
+          '<span class="ritual-complete-icon">🎉</span>' +
+          '<div class="ritual-complete-title">Journey Complete!</div>' +
+          '<div class="ritual-complete-desc">Shabash! Aapne aaj ka ' + escapeHtml(journey.title) + ' poora kiya.</div>' +
+        '</div>'
+      : '');
+
+  playSound('click');
+};
+
+window.toggleJourneyStep = function(journeyId, stepIndex) {
+  const journey = JOURNEYS.find(j => j.id === journeyId);
+  if (!journey) return;
+
+  const stepId = journeyId + '_step_' + stepIndex;
+  const doneToday = state.log[TODAY] || [];
+
+  if (doneToday.includes(stepId)) {
+    state.log[TODAY] = doneToday.filter(id => id !== stepId);
+    showToast('Step unchecked', false, true);
+  } else {
+    if (!state.log[TODAY]) state.log[TODAY] = [];
+    state.log[TODAY].push(stepId);
+    checkAchievements();
+    playSound('complete');
+    vibrate([40, 20, 40]);
+    showToast('✓ Step complete!');
+  }
+
+  save();
+  openJourney(journeyId); // Re-render
+  renderHomeProgress();
+};
+
+window.closeRitual = function() {
+  switchPage('journeys');
+  playSound('click');
+};
+
+/* ==================== STEP MODAL ==================== */
+
+window.closeStepModal = function() {
+  clearInterval(durationTimerState.interval);
+  durationTimerState.running = false;
+  durationTimerState.seconds = 0;
+  durationTimerState.habitId = null;
+
+  const modal = document.getElementById('stepModal');
+  if (modal) modal.classList.remove('show');
+
+  // Reset Complete button
+  const completeBtn = modal ? modal.querySelector('.btn-primary') : null;
+  if (completeBtn) {
+    completeBtn.textContent = 'Complete ✓';
+    completeBtn.onclick = completeStepFromModal;
+  }
+};
+
+window.completeStepFromModal = function() {
+  closeStepModal();
+};
+
+/* ==================== ACHIEVEMENTS CHECK ==================== */
+
+window.checkAchievements = function() {
+  const totalDone = Object.keys(state.log).reduce((sum, k) => {
+    return sum + (state.log[k] || []).length;
+  }, 0);
+
+  const maxStreak = state.habits.length > 0
+    ? Math.max.apply(null, state.habits.map(h => getHabitStreak(h.id)))
+    : 0;
+
+  const addAch = id => {
+    if (!state.achievements) state.achievements = [];
+    if (!state.achievements.includes(id)) {
+      state.achievements.push(id);
+      const a = ACHIEVEMENTS.find(x => x.id === id);
+      if (a) {
+        setTimeout(() => {
+          showToast('🏆 ' + a.name + ' unlocked!');
+          playSound('celebrate');
+        }, 800);
+      }
+    }
+  };
+
+  if (totalDone >= 1) addAch('first_step');
+  if (maxStreak >= 3) addAch('streak_3');
+  if (maxStreak >= 7) addAch('streak_7');
+  if (maxStreak >= 30) addAch('streak_30');
+  if (maxStreak >= 100) addAch('streak_100');
+
+  // Water master: 7 days of 8 glasses
+  if (state.water) {
+    let waterDays = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const key = dateKey(d);
+      if ((state.water[key] || 0) >= 8) waterDays++;
+    }
+    if (waterDays >= 7) addAch('water_master');
+  }
+
+  // Journal 7 entries
+  if (Object.keys(state.journal || {}).length >= 7) addAch('journal_7');
+
+  // Focus 10 sessions
+  if ((state.focusSessions || []).length >= 10) addAch('focus_10');
+
+  save();
+};
+
+window.checkAllComplete = function() {
+  const doneToday = state.log[TODAY] || [];
+  const activeHabits = state.habits.filter(h => !h.archived);
+
+  if (activeHabits.length === 0) return;
+  if (doneToday.length < activeHabits.length) return;
+
+  // Confetti celebration
+  setTimeout(() => {
+    celebrate();
+  }, 500);
+};
+
+/* ==================== CELEBRATION ==================== */
+
+window.celebrate = function() {
+  const colors = ['#ff6b9d', '#c084fc', '#60a5fa', '#4ade80', '#fbbf24'];
+
+  for (let i = 0; i < 80; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+    piece.style.animationDelay = Math.random() * 0.3 + 's';
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 3500);
+  }
+
+  showToast('🎉 Sab rituals complete! Shabash!');
+  playSound('celebrate');
+  vibrate([50, 30, 50, 30, 50]);
+};
+
+/* ==================== EMOJI PICKER ==================== */
+
+document.addEventListener('click', (e) => {
+  const emojiOpt = e.target.closest('.emoji-opt');
+  if (emojiOpt) {
+    const picker = emojiOpt.parentElement;
+    if (picker) {
+      picker.querySelectorAll('.emoji-opt').forEach(el => {
+        el.style.borderColor = 'transparent';
+        el.style.background = 'transparent';
+        el.classList.remove('selected');
+      });
+    }
+    emojiOpt.style.borderColor = 'var(--primary)';
+    emojiOpt.style.background = 'var(--card2)';
+    emojiOpt.classList.add('selected');
+    playSound('click');
+    vibrate(10);
+  }
+});
+
+/* ==================== RE-RENDER ON INIT ==================== */
+
+// Wait for DOM ready then re-render rituals
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    if (typeof renderRitualsToday === 'function') {
+      renderRitualsToday();
+    }
+  }, 2200);
+});
+
+console.log('✅ Part 8 loaded — Habits + Rituals');
+</script>
+<script>
+/* ============================================================
+   FABULOUS CLONE — Part 9
+   Focus Timer (Pomodoro) + Breathing + Water Tracker
+   ============================================================ */
+
+/* ==================== FOCUS TIMER ==================== */
+
+const FOCUS_MODES = {
+  focus: { minutes: 25, label: 'Focus', color: '#ff6b9d' },
+  short: { minutes: 5, label: 'Short Break', color: '#60a5fa' },
+  long: { minutes: 15, label: 'Long Break', color: '#c084fc' }
+};
+
+let focusState = {
+  mode: 'focus',
+  totalSeconds: 25 * 60,
+  remainingSeconds: 25 * 60,
+  interval: null,
+  running: false
+};
+
+// Override Part 7 placeholder
+window.openFocusTimer = function() {
+  const modal = document.getElementById('focusModal');
+  if (!modal) return;
+
+  resetFocusTimer();
+  updateFocusModeUI();
+  updateFocusDisplay();
+  updateFocusStats();
+
+  modal.classList.add('show');
+  playSound('click');
+  vibrate(15);
+};
+
+window.closeFocusTimer = function() {
+  if (focusState.running) {
+    if (!confirm('Timer chal raha hai. Band karein?')) return;
+  }
+  clearInterval(focusState.interval);
+  focusState.running = false;
+  focusState.interval = null;
+
+  const modal = document.getElementById('focusModal');
+  if (modal) modal.classList.remove('show');
+
+  playSound('click');
+};
+
+window.setFocusMode = function(mode) {
+  if (!FOCUS_MODES[mode]) return;
+  if (focusState.running) {
+    if (!confirm('Timer chal raha hai. Mode change karein?')) return;
+    clearInterval(focusState.interval);
+    focusState.running = false;
+  }
+
+  focusState.mode = mode;
+  const m = FOCUS_MODES[mode];
+  focusState.totalSeconds = m.minutes * 60;
+  focusState.remainingSeconds = m.minutes * 60;
+
+  updateFocusModeUI();
+  updateFocusDisplay();
+  updateFocusProgressRing();
+
+  const startBtn = document.getElementById('focusStartBtn');
+  if (startBtn) startBtn.textContent = '▶';
+
+  playSound('click');
+  vibrate(10);
+};
+
+function updateFocusModeUI() {
+  document.querySelectorAll('.focus-mode-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.mode === focusState.mode);
+  });
+
+  const label = document.getElementById('focusLabel');
+  if (label) label.textContent = FOCUS_MODES[focusState.mode].label;
+}
+
+window.toggleFocusTimer = function() {
+  const startBtn = document.getElementById('focusStartBtn');
+
+  if (focusState.running) {
+    // Pause
+    clearInterval(focusState.interval);
+    focusState.running = false;
+    if (startBtn) startBtn.textContent = '▶';
+    playSound('click');
+    vibrate(20);
+    return;
+  }
+
+  // Start
+  focusState.running = true;
+  if (startBtn) startBtn.textContent = '⏸';
+  playSound('click');
+  vibrate(20);
+
+  focusState.interval = setInterval(() => {
+    focusState.remainingSeconds--;
+
+    if (focusState.remainingSeconds <= 0) {
+      completeFocusSession();
+      return;
+    }
+
+    updateFocusDisplay();
+    updateFocusProgressRing();
+  }, 1000);
+};
+
+window.resetFocusTimer = function() {
+  clearInterval(focusState.interval);
+  focusState.running = false;
+  focusState.interval = null;
+  focusState.remainingSeconds = focusState.totalSeconds;
+
+  updateFocusDisplay();
+  updateFocusProgressRing();
+
+  const startBtn = document.getElementById('focusStartBtn');
+  if (startBtn) startBtn.textContent = '▶';
+};
+
+function updateFocusDisplay() {
+  const disp = document.getElementById('focusTime');
+  if (!disp) return;
+
+  const m = Math.floor(focusState.remainingSeconds / 60);
+  const s = focusState.remainingSeconds % 60;
+  disp.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+
+  document.title = focusState.running
+    ? disp.textContent + ' — ' + FOCUS_MODES[focusState.mode].label
+    : 'Fabulous — Habit Tracker';
+}
+
+function updateFocusProgressRing() {
+  const ring = document.getElementById('focusRingFg');
+  if (!ring) return;
+
+  const circumference = 722;
+  const progress = focusState.remainingSeconds / focusState.totalSeconds;
+  const offset = circumference * (1 - progress);
+  ring.style.strokeDashoffset = offset;
+}
+
+function completeFocusSession() {
+  clearInterval(focusState.interval);
+  focusState.running = false;
+  focusState.interval = null;
+
+  const m = FOCUS_MODES[focusState.mode];
+  const minutes = m.minutes;
+
+  // Save session (only for focus mode)
+  if (focusState.mode === 'focus') {
+    if (!state.focusSessions) state.focusSessions = [];
+    state.focusSessions.push({
+      date: TODAY,
+      minutes: minutes,
+      type: 'focus',
+      completedAt: new Date().toISOString()
+    });
+    save();
+    checkAchievements();
+  }
+
+  // Reset
+  focusState.remainingSeconds = focusState.totalSeconds;
+  updateFocusDisplay();
+  updateFocusProgressRing();
+
+  const startBtn = document.getElementById('focusStartBtn');
+  if (startBtn) startBtn.textContent = '▶';
+
+  updateFocusStats();
+
+  // Celebration
+  playSound('celebrate');
+  vibrate([100, 50, 100]);
+  showToast('🎉 ' + minutes + ' min ' + m.label + ' complete!');
+};
+
+function updateFocusStats() {
+  const todayEl = document.getElementById('focusSessionsToday');
+  const totalMinEl = document.getElementById('focusTotalMin');
+  const totalSessEl = document.getElementById('focusTotalSessions');
+
+  const sessions = state.focusSessions || [];
+  const todaySessions = sessions.filter(s => s.date === TODAY);
+  const todayMin = todaySessions.reduce((sum, s) => sum + s.minutes, 0);
+  const totalMin = sessions.reduce((sum, s) => sum + s.minutes, 0);
+
+  if (todayEl) todayEl.textContent = todayMin;
+  if (totalMinEl) totalMinEl.textContent = totalMin;
+  if (totalSessEl) totalSessEl.textContent = sessions.length;
+}
+
+/* ==================== BREATHING EXERCISE ==================== */
+
+const BREATHE_PATTERNS = {
+  calm: { name: 'Calm', inhale: 4, hold1: 4, exhale: 4, hold2: 4 },
+  relax: { name: 'Relax', inhale: 4, hold1: 7, exhale: 8, hold2: 0 },
+  energy: { name: 'Energy', inhale: 6, hold1: 2, exhale: 6, hold2: 0 }
+};
+
+let breatheState = {
+  pattern: 'calm',
+  phase: 'inhale',
+  counter: 4,
+  interval: null,
+  running: false,
+  cycles: 0
+};
+
+window.openBreathing = function() {
+  const modal = document.getElementById('breatheModal');
+  if (!modal) return;
+
+  setBreathePattern('calm');
+  modal.classList.add('show');
+  playSound('click');
+  vibrate(15);
+};
+
+window.closeBreathing = function() {
+  clearInterval(breatheState.interval);
+  breatheState.running = false;
+  breatheState.interval = null;
+
+  const circle = document.getElementById('breatheCircle');
+  if (circle) {
+    circle.classList.remove('inhale', 'exhale', 'hold');
+  }
+
+  const modal = document.getElementById('breatheModal');
+  if (modal) modal.classList.remove('show');
+
+  playSound('click');
+};
+
+window.setBreathePattern = function(pattern) {
+  if (!BREATHE_PATTERNS[pattern]) return;
+  if (breatheState.running) {
+    clearInterval(breatheState.interval);
+    breatheState.running = false;
+    breatheState.phase = 'inhale';
+    breatheState.counter = BREATHE_PATTERNS[pattern].inhale;
+  }
+
+  breatheState.pattern = pattern;
+
+  document.querySelectorAll('.breathe-pattern').forEach(p => {
+    p.classList.toggle('active', p.dataset.pattern === pattern);
+  });
+
+  const phaseEl = document.getElementById('breathePhase');
+  const counterEl = document.getElementById('breatheCounter');
+  if (phaseEl) phaseEl.textContent = 'Inhale';
+  if (counterEl) counterEl.textContent = BREATHE_PATTERNS[pattern].inhale;
+
+  const startBtn = document.getElementById('breatheStartBtn');
+  if (startBtn) startBtn.textContent = '▶';
+
+  const info = document.getElementById('breatheInfo');
+  if (info) info.textContent = 'Circle ke saath saans lein. Relax karein.';
+
+  playSound('click');
+  vibrate(10);
+};
+
+window.toggleBreathing = function() {
+  const startBtn = document.getElementById('breatheStartBtn');
+
+  if (breatheState.running) {
+    clearInterval(breatheState.interval);
+    breatheState.running = false;
+    if (startBtn) startBtn.textContent = '▶';
+    playSound('click');
+    vibrate(20);
+    return;
+  }
+
+  breatheState.running = true;
+  breatheState.cycles = 0;
+  if (startBtn) startBtn.textContent = '⏸';
+
+  const pattern = BREATHE_PATTERNS[breatheState.pattern];
+  breatheState.phase = 'inhale';
+  breatheState.counter = pattern.inhale;
+
+  applyBreathePhase();
+  playSound('click');
+
+  breatheState.interval = setInterval(() => {
+    breatheState.counter--;
+
+    if (breatheState.counter <= 0) {
+      // Move to next phase
+      if (breatheState.phase === 'inhale') {
+        if (pattern.hold1 > 0) {
+          breatheState.phase = 'hold1';
+          breatheState.counter = pattern.hold1;
+        } else {
+          breatheState.phase = 'exhale';
+          breatheState.counter = pattern.exhale;
+        }
+      } else if (breatheState.phase === 'hold1') {
+        breatheState.phase = 'exhale';
+        breatheState.counter = pattern.exhale;
+      } else if (breatheState.phase === 'exhale') {
+        if (pattern.hold2 > 0) {
+          breatheState.phase = 'hold2';
+          breatheState.counter = pattern.hold2;
+        } else {
+          breatheState.phase = 'inhale';
+          breatheState.counter = pattern.inhale;
+          breatheState.cycles++;
+        }
+      } else if (breatheState.phase === 'hold2') {
+        breatheState.phase = 'inhale';
+        breatheState.counter = pattern.inhale;
+        breatheState.cycles++;
+
+        // Save every cycle
+        if (!state.mood) state.mood = {};
+        // Track breathing in focus sessions stats (optional)
+        save();
+      }
+
+      applyBreathePhase();
+    } else {
+      const counterEl = document.getElementById('breatheCounter');
+      if (counterEl) counterEl.textContent = breatheState.counter;
+    }
+  }, 1000);
+};
+
+function applyBreathePhase() {
+  const circle = document.getElementById('breatheCircle');
+  const phaseEl = document.getElementById('breathePhase');
+  const counterEl = document.getElementById('breatheCounter');
+
+  if (circle) {
+    circle.classList.remove('inhale', 'exhale', 'hold');
+  }
+
+  if (breatheState.phase === 'inhale') {
+    if (circle) circle.classList.add('inhale');
+    if (phaseEl) phaseEl.textContent = 'Inhale';
+    playSound('click');
+  } else if (breatheState.phase === 'exhale') {
+    if (circle) circle.classList.add('exhale');
+    if (phaseEl) phaseEl.textContent = 'Exhale';
+  } else {
+    if (circle) circle.classList.add('hold');
+    if (phaseEl) phaseEl.textContent = 'Hold';
+  }
+
+  if (counterEl) counterEl.textContent = breatheState.counter;
+}
+
+/* ==================== WATER TRACKER ==================== */
+
+const WATER_TARGET = 8;
+
+window.openWaterTracker = function() {
+  const modal = document.getElementById('waterModal');
+  if (!modal) return;
+
+  renderWaterGrid();
+  updateWaterCount();
+  modal.classList.add('show');
+  playSound('click');
+  vibrate(15);
+};
+
+window.closeWater = function() {
+  const modal = document.getElementById('waterModal');
+  if (modal) modal.classList.remove('show');
+  playSound('click');
+
+  // Update home if needed
+  renderHomeProgress();
+};
+
+window.renderWaterGrid = function() {
+  const grid = document.getElementById('waterGrid');
+  if (!grid) return;
+
+  const current = (state.water && state.water[TODAY]) || 0;
+
+  let html = '';
+  for (let i = 1; i <= WATER_TARGET; i++) {
+    const filled = i <= current;
+    html +=
+      '<div class="water-glass ' + (filled ? 'filled' : '') + '" onclick="toggleWater(' + i + ')">' +
+        '💧' +
+      '</div>';
+  }
+  grid.innerHTML = html;
+};
+
+window.toggleWater = function(index) {
+  if (!state.water) state.water = {};
+  const current = state.water[TODAY] || 0;
+
+  // If clicking on filled glass, reduce to that index - 1
+  // If clicking on empty glass, set to that index
+  if (index <= current) {
+    // Reduce
+    if (index === current) {
+      state.water[TODAY] = index - 1;
+    } else {
+      state.water[TODAY] = index;
+    }
+  } else {
+    state.water[TODAY] = index;
+  }
+
+  save();
+  renderWaterGrid();
+  updateWaterCount();
+
+  playSound('click');
+  vibrate(15);
+
+  // Check if reached target
+  if (state.water[TODAY] >= WATER_TARGET && current < WATER_TARGET) {
+    setTimeout(() => {
+      playSound('celebrate');
+      vibrate([50, 30, 50]);
+      showToast('💧 8 glass complete! Shabash!');
+    }, 300);
+  }
+};
+
+window.resetWater = function() {
+  if (!state.water) state.water = {};
+  state.water[TODAY] = 0;
+  save();
+  renderWaterGrid();
+  updateWaterCount();
+  playSound('click');
+  showToast('Water reset');
+};
+
+function updateWaterCount() {
+  const el = document.getElementById('waterCount');
+  if (!el) return;
+  const current = (state.water && state.water[TODAY]) || 0;
+  el.textContent = current + ' / ' + WATER_TARGET;
+}
+
+/* ==================== OVERRIDE PLACEHOLDERS ==================== */
+
+// These functions are now fully implemented — no placeholders remain for:
+// - openFocusTimer (Part 9)
+// - openBreathing (Part 9)
+// - openWaterTracker (Part 9)
+
+/* ==================== INITIALIZATION ==================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Pre-load focus stats
+  setTimeout(() => {
+    updateFocusStats();
+  }, 2500);
+});
+
+console.log('✅ Part 9 loaded — Focus + Breathe + Water');
+</script>
+  <script>
+/* ============================================================
+   FABULOUS CLONE — Part 10
+   Stats Page + Journal + Achievements Display
+   ============================================================ */
+
+/* ==================== STATS PAGE ==================== */
+
+// Override Part 7 placeholder
+window.renderStats = function() {
+  renderStatsOverview();
+  renderHeatmap();
+  renderWeekChart();
+  renderAchievementsGrid();
+};
+
+/* -------- Stats Overview -------- */
+function renderStatsOverview() {
+  const container = document.getElementById('statsOverview');
+  if (!container) return;
+
+  // Calculate stats
+  const totalHabits = state.habits.filter(h => !h.archived).length;
+
+  let totalCheckins = 0;
+  Object.keys(state.log || {}).forEach(k => {
+    totalCheckins += (state.log[k] || []).length;
+  });
+
+  const activeDays = Object.keys(state.log || {}).filter(k => (state.log[k] || []).length > 0).length;
+
+  const maxStreak = state.habits.length > 0
+    ? Math.max.apply(null, state.habits.map(h => getHabitStreak(h.id)))
+    : 0;
+
+  const focusMin = (state.focusSessions || []).reduce((s, x) => s + x.minutes, 0);
+
+  const journalCount = Object.keys(state.journal || {}).length;
+
+  // Today's progress
+  const doneToday = (state.log[TODAY] || []).length;
+  const todayPercent = totalHabits > 0 ? Math.round((doneToday / totalHabits) * 100) : 0;
+
+  container.innerHTML =
+    '<div class="stat-box">' +
+      '<span class="stat-box-icon">🎯</span>' +
+      '<div class="stat-box-num">' + totalCheckins + '</div>' +
+      '<div class="stat-box-lbl">Total Check-ins</div>' +
+      '<div class="stat-box-trend up">+' + doneToday + ' aaj</div>' +
+    '</div>' +
+    '<div class="stat-box">' +
+      '<span class="stat-box-icon">🔥</span>' +
+      '<div class="stat-box-num">' + maxStreak + '</div>' +
+      '<div class="stat-box-lbl">Best Streak</div>' +
+      '<div class="stat-box-trend">din lagatar</div>' +
+    '</div>' +
+    '<div class="stat-box">' +
+      '<span class="stat-box-icon">📅</span>' +
+      '<div class="stat-box-num">' + activeDays + '</div>' +
+      '<div class="stat-box-lbl">Active Days</div>' +
+      '<div class="stat-box-trend">' + todayPercent + '% aaj</div>' +
+    '</div>' +
+    '<div class="stat-box">' +
+      '<span class="stat-box-icon">⏱️</span>' +
+      '<div class="stat-box-num">' + focusMin + '</div>' +
+      '<div class="stat-box-lbl">Focus Minutes</div>' +
+      '<div class="stat-box-trend">total focus</div>' +
+    '</div>' +
+    '<div class="stat-box">' +
+      '<span class="stat-box-icon">📔</span>' +
+      '<div class="stat-box-num">' + journalCount + '</div>' +
+      '<div class="stat-box-lbl">Journal Entries</div>' +
+      '<div class="stat-box-trend">reflections</div>' +
+    '</div>' +
+    '<div class="stat-box">' +
+      '<span class="stat-box-icon">💧</span>' +
+      '<div class="stat-box-num">' + ((state.water && state.water[TODAY]) || 0) + '</div>' +
+      '<div class="stat-box-lbl">Water Today</div>' +
+      '<div class="stat-box-trend">/ 8 glasses</div>' +
+    '</div>';
+}
+
+/* -------- Heatmap -------- */
+window.switchHeatmap = function(days) {
+  state.currentHeatmap = days;
+  document.querySelectorAll('[data-hm]').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.hm) === days);
+  });
+  renderHeatmap();
+  playSound('click');
+};
+
+function renderHeatmap() {
+  const hm = document.getElementById('heatmap');
+  if (!hm) return;
+
+  const days = state.currentHeatmap || 90;
+  hm.className = 'heatmap' + (days === 365 ? ' year' : '');
+
+  const totalHabits = state.habits.filter(h => !h.archived).length || 1;
+
+  let html = '';
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = dateKey(d);
+    const count = (state.log[key] || []).length;
+    const ratio = count / totalHabits;
+
+    let level = '';
+    if (ratio > 0 && ratio <= 0.25) level = 'l1';
+    else if (ratio > 0.25 && ratio <= 0.5) level = 'l2';
+    else if (ratio > 0.5 && ratio <= 0.75) level = 'l3';
+    else if (ratio > 0.75) level = 'l4';
+
+    const dayName = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    html += '<div class="heat-cell ' + level + '" title="' + dayName + ': ' + count + '/' + totalHabits + '"></div>';
+  }
+  hm.innerHTML = html;
+}
+
+/* -------- Week Chart -------- */
+function renderWeekChart() {
+  const chart = document.getElementById('weekChart');
+  if (!chart) return;
+
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const now = new Date();
+  const dow = now.getDay() === 0 ? 6 : now.getDay() - 1;
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - dow);
+
+  const totalHabits = state.habits.filter(h => !h.archived).length || 1;
+
+  let html = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const key = dateKey(d);
+    const count = (state.log[key] || []).length;
+    const pct = Math.round((count / totalHabits) * 100);
+    const isToday = key === TODAY;
+
+    html +=
+      '<div class="bar-col">' +
+        '<div class="bar-bg">' +
+          '<div class="bar-fill ' + (isToday ? 'today' : '') + '" style="height:' + pct + '%"></div>' +
+        '</div>' +
+        '<span class="bar-lbl ' + (isToday ? 'today' : '') + '">' + days[i] + '</span>' +
+      '</div>';
+  }
+  chart.innerHTML = html;
+}
+
+/* -------- Achievements Grid -------- */
+function renderAchievementsGrid() {
+  const grid = document.getElementById('achGrid');
+  if (!grid) return;
+
+  const unlocked = state.achievements || [];
+
+  grid.innerHTML = ACHIEVEMENTS.map(a => {
+    const isUnlocked = unlocked.includes(a.id);
+    return (
+      '<div class="ach-card ' + (isUnlocked ? 'unlocked' : '') + '">' +
+        '<div class="ach-icon">' + a.icon + '</div>' +
+        '<div class="ach-info">' +
+          '<span class="ach-name">' + escapeHtml(a.name) + '</span>' +
+          '<span class="ach-desc">' + escapeHtml(a.desc) + '</span>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+}
+
+/* ==================== JOURNAL ==================== */
+
+const JOURNAL_MOODS = ['', '😢', '😐', '🙂', '😊', '🤩'];
+
+// Override Part 7 placeholder
+window.renderJournal = function() {
+  renderTodayJournal();
+  renderMoodWeek();
+  renderJournalHistory();
+};
+
+function renderTodayJournal() {
+  const container = document.getElementById('todayJournalDisplay');
+  if (!container) return;
+
+  const entry = (state.journal && state.journal[TODAY]) || null;
+
+  if (!entry || (!entry.text && !entry.gratitude && !entry.mood)) {
+    container.innerHTML =
+      '<div class="empty">' +
+        '<span class="empty-icon">📝</span>' +
+        'Aaj ka journal abhi khali hai.<br>' +
+        '"Write" dabakar apne khayalat likhein.' +
+      '</div>';
+    return;
+  }
+
+  let html = '<div style="padding:4px 0">';
+
+  if (entry.mood) {
+    html += '<div style="font-size:40px;text-align:center;margin-bottom:12px">' + JOURNAL_MOODS[entry.mood] + '</div>';
+  }
+
+  if (entry.text) {
+    html += '<div style="font-size:14px;line-height:1.7;color:var(--text);margin-bottom:14px;padding:14px;background:var(--card2);border-radius:14px;white-space:pre-wrap">' + escapeHtml(entry.text) + '</div>';
+  }
+
+  if (entry.gratitude) {
+    html +=
+      '<div style="font-size:12px;color:var(--text2);line-height:1.7;padding:12px;background:linear-gradient(135deg,rgba(255,107,157,.08),rgba(192,132,252,.08));border-radius:14px;border:1px solid rgba(255,107,157,.2)">' +
+        '<strong style="color:var(--primary);display:block;margin-bottom:6px">🙏 Gratitude</strong>' +
+        escapeHtml(entry.gratitude).replace(/\n/g, '<br>') +
+      '</div>';
+  }
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderMoodWeek() {
+  const container = document.getElementById('moodWeekDisplay');
+  if (!container) return;
+
+  let html = '<div style="display:flex;justify-content:space-between;gap:8px;padding:8px 0">';
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = dateKey(d);
+    const mood = (state.journal[key] && state.journal[key].mood) || null;
+    const dayLabel = d.toLocaleDateString('en-GB', { weekday: 'short' }).slice(0, 2);
+    const isToday = key === TODAY;
+
+    html +=
+      '<div style="flex:1;text-align:center">' +
+        '<div style="font-size:26px;height:40px;display:flex;align-items:center;justify-content:center;background:' + (isToday ? 'linear-gradient(135deg,rgba(255,107,157,.15),rgba(192,132,252,.15))' : 'var(--card2)') + ';border-radius:12px;border:1px solid ' + (isToday ? 'rgba(255,107,157,.3)' : 'var(--border)') + '">' +
+          (mood ? JOURNAL_MOODS[mood] : '<span style="opacity:.25;font-size:20px">·</span>') +
+        '</div>' +
+        '<div style="font-size:10px;color:' + (isToday ? 'var(--primary)' : 'var(--text3)') + ';font-weight:700;margin-top:6px;text-transform:uppercase">' + dayLabel + '</div>' +
+      '</div>';
+  }
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderJournalHistory() {
+  const container = document.getElementById('journalHistory');
+  if (!container) return;
+
+  const entries = Object.keys(state.journal || {})
+    .sort((a, b) => b.localeCompare(a))
+    .filter(k => k !== TODAY)
+    .slice(0, 20);
+
+  if (entries.length === 0) {
+    container.innerHTML =
+      '<div class="empty">' +
+        'Abhi koi purani entry nahi.<br>' +
+        'Rozana likhkar apni journey record karein.' +
+      '</div>';
+    return;
+  }
+
+  container.innerHTML = entries.map(date => {
+    const j = state.journal[date];
+    const d = new Date(date);
+    const dateLabel = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+
+    return (
+      '<div style="padding:14px;background:var(--card2);border-radius:14px;margin-bottom:10px;border:1px solid var(--border)">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
+          '<span style="font-size:11px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.5px">' + dateLabel + '</span>' +
+          (j.mood ? '<span style="font-size:20px">' + JOURNAL_MOODS[j.mood] + '</span>' : '') +
+        '</div>' +
+        (j.text ? '<div style="font-size:13px;line-height:1.6;color:var(--text);margin-bottom:6px;white-space:pre-wrap">' + escapeHtml(j.text) + '</div>' : '') +
+        (j.gratitude ? '<div style="font-size:11px;color:var(--text2);white-space:pre-wrap;line-height:1.5;padding-top:6px;border-top:1px solid var(--border)">🙏 ' + escapeHtml(j.gratitude) + '</div>' : '') +
+      '</div>'
+    );
+  }).join('');
+}
+
+/* ==================== JOURNAL MODAL ==================== */
+
+let currentJournalMood = null;
+
+// Override Part 7 placeholder
+window.openJournalModal = function() {
+  const modal = document.getElementById('journalModal');
+  if (!modal) return;
+
+  const dateLabel = document.getElementById('journalDateLabel');
+  if (dateLabel) {
+    dateLabel.textContent = new Date().toLocaleDateString('en-GB', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
+  }
+
+  // Load existing entry
+  const entry = (state.journal && state.journal[TODAY]) || {};
+
+  const textEl = document.getElementById('journalTextInput');
+  const gratEl = document.getElementById('journalGratitudeInput');
+  if (textEl) textEl.value = entry.text || '';
+  if (gratEl) gratEl.value = entry.gratitude || '';
+
+  currentJournalMood = entry.mood || null;
+
+  // Highlight selected mood
+  document.querySelectorAll('#journalMoodRow .mood-btn').forEach(btn => {
+    const m = parseInt(btn.dataset.mood);
+    btn.classList.toggle('selected', m === currentJournalMood);
+  });
+
+  modal.classList.add('show');
+  playSound('click');
+  vibrate(15);
+};
+
+window.closeJournalModal = function() {
+  const modal = document.getElementById('journalModal');
+  if (modal) modal.classList.remove('show');
+  playSound('click');
+};
+
+window.saveJournal = function() {
+  const textEl = document.getElementById('journalTextInput');
+  const gratEl = document.getElementById('journalGratitudeInput');
+
+  const text = textEl ? textEl.value.trim() : '';
+  const gratitude = gratEl ? gratEl.value.trim() : '';
+
+  if (!text && !gratitude && !currentJournalMood) {
+    showToast('Kuch likhein ya mood select karein', true);
+    playSound('error');
+    return;
+  }
+
+  if (!state.journal) state.journal = {};
+  state.journal[TODAY] = {
+    text: text,
+    gratitude: gratitude,
+    mood: currentJournalMood,
+    savedAt: new Date().toISOString()
+  };
+
+  save();
+  closeJournalModal();
+  renderJournal();
+  checkAchievements();
+
+  playSound('success');
+  vibrate([40, 20, 40]);
+  showToast('Journal save ho gaya 📔');
+};
+
+/* ==================== MOOD BUTTONS ==================== */
+
+document.addEventListener('click', (e) => {
+  const moodBtn = e.target.closest('#journalMoodRow .mood-btn');
+  if (moodBtn) {
+    document.querySelectorAll('#journalMoodRow .mood-btn').forEach(b => b.classList.remove('selected'));
+    moodBtn.classList.add('selected');
+    currentJournalMood = parseInt(moodBtn.dataset.mood);
+    playSound('click');
+    vibrate(10);
+  }
+});
+
+/* ==================== REFRESH ON PAGE SWITCH ==================== */
+
+// Wrap switchPage to refresh stats/journal after switching
+const _origSwitchPage = window.switchPage;
+window.switchPage = function(page, ev) {
+  _origSwitchPage(page, ev);
+  setTimeout(() => {
+    if (page === 'stats') {
+      renderStats();
+    } else if (page === 'journal') {
+      renderJournal();
+    }
+  }, 50);
+};
+
+/* ==================== INITIALIZATION ==================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Pre-render after splash
+  setTimeout(() => {
+    if (typeof renderStats === 'function') renderStats();
+    if (typeof renderJournal === 'function') renderJournal();
+  }, 2300);
+});
+
+console.log('✅ Part 10 loaded — Stats + Journal + Achievements');
+</script>
+  <script>
+/* ============================================================
+   FABULOUS CLONE — Part 11
+   AI Coach — Gemini Integration, Chat, Smart Insights
+   ============================================================ */
+
+/* ==================== GEMINI API ==================== */
+
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+
+async function callGemini(prompt, options) {
+  options = options || {};
+
+  if (!state.apiKey) {
+    throw new Error('API key set nahi hai. Settings mein daalein.');
+  }
+
+  const body = {
+    contents: [{
+      parts: [{ text: prompt }]
+    }],
+    generationConfig: {
+      temperature: options.temperature !== undefined ? options.temperature : 0.8,
+      maxOutputTokens: options.maxOutputTokens || 500
+    }
+  };
+
+  const res = await fetch(GEMINI_API_URL + '?key=' + state.apiKey, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    let errMsg = 'API error: ' + res.status;
+    try {
+      const errData = JSON.parse(errText);
+      if (errData.error && errData.error.message) {
+        errMsg = errData.error.message;
+      }
+    } catch (e) { /* ignore */ }
+    throw new Error(errMsg);
+  }
+
+  const data = await res.json();
+
+  if (data.error) {
+    throw new Error(data.error.message || 'Unknown error');
+  }
+
+  const text = data.candidates &&
+               data.candidates[0] &&
+               data.candidates[0].content &&
+               data.candidates[0].content.parts &&
+               data.candidates[0].content.parts[0] &&
+               data.candidates[0].content.parts[0].text;
+
+  return text || 'Jawab nahi mila. Dobara koshish karein.';
+}
+
+/* ==================== HABIT SUMMARY HELPER ==================== */
+
+function getHabitSummary() {
+  const doneToday = state.log[TODAY] || [];
+  const activeHabits = state.habits.filter(h => !h.archived);
+
+  if (activeHabits.length === 0) {
+    return '(Abhi koi habit nahi banayi)';
+  }
+
+  return activeHabits.map(h => {
+    const streak = getHabitStreak(h.id);
+    const done = doneToday.includes(h.id) ? 'aaj done ✓' : 'aaj pending';
+    const cat = h.category || 'other';
+    return '- ' + (h.emoji || '🎯') + ' ' + h.name + ' [' + cat + '] (streak: ' + streak + ' din, ' + done + ')';
+  }).join('\n');
+}
+
+function getFullContext() {
+  const name = state.name || 'User';
+  const doneToday = (state.log[TODAY] || []).length;
+  const totalToday = state.habits.filter(h => !h.archived).length;
+  const waterToday = (state.water && state.water[TODAY]) || 0;
+  const focusToday = (state.focusSessions || [])
+    .filter(s => s.date === TODAY)
+    .reduce((sum, s) => sum + s.minutes, 0);
+  const journalToday = state.journal && state.journal[TODAY];
+
+  let ctx = 'Naam: ' + name + '\n';
+  ctx += 'Aaj ka progress: ' + doneToday + '/' + totalToday + ' rituals\n';
+  ctx += 'Paani: ' + waterToday + '/8 glasses\n';
+  ctx += 'Focus time: ' + focusToday + ' minutes\n';
+
+  if (journalToday && journalToday.mood) {
+    const moods = ['', '😢', '😐', '🙂', '😊', '🤩'];
+    ctx += 'Mood: ' + moods[journalToday.mood] + '\n';
+  }
+
+  ctx += '\nHabits:\n' + getHabitSummary();
+  return ctx;
+}
+
+/* ==================== AI COACH BUTTONS ==================== */
+
+window.askAICoach = async function(type) {
+  const output = document.getElementById('aiOutput');
+  if (!output) return;
+
+  if (!state.apiKey) {
+    output.innerHTML = '⚠️ Pehle <strong>⚙️ Settings</strong> mein Gemini API key daalein.<br><br>Free key: <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a>';
+    showToast('API key missing', true);
+    return;
+  }
+
+  if (state.habits.filter(h => !h.archived).length === 0) {
+    output.textContent = '⚠️ Pehle koi habit add karein taake AI salah de sake.';
+    return;
+  }
+
+  // Disable buttons
+  const btns = document.querySelectorAll('.ai-btn');
+  btns.forEach(b => b.disabled = true);
+
+  output.innerHTML = '<span class="spinner"></span> AI soch raha hai...';
+
+  const ctx = getFullContext();
+  const name = state.name || 'User';
+
+  const prompts = {
+    motivate:
+      'Yeh mera habit tracker data hai:\n\n' + ctx + '\n\n' +
+      'Mera naam ' + name + ' hai. Mujhe 3 chhoti, energetic lines mein motivate karein Roman Urdu mein. ' +
+      'Direct baat karein, emoji use karein, aur positive tone rakhein.',
+
+    suggest:
+      'Mere habits:\n\n' + ctx + '\n\n' +
+      'Mere routine ke hisaab se 3 naye habit suggestions dein jo mere goals ke saath fit hon. ' +
+      'Har suggestion ke saath 1 line ka reason bhi likhein. Roman Urdu mein.',
+
+    report:
+      'Mere habits:\n\n' + ctx + '\n\n' +
+      'Mera weekly coaching report banayein Roman Urdu mein (150-200 words). ' +
+      'Format: (1) Kya achha chal raha hai, (2) Kya weak hai, (3) 2 practical improvements.',
+
+    recovery:
+      'Mere habits:\n\n' + ctx + '\n\n' +
+      'Mere kuch streaks toot gaye hain ya main track se bahar hoon. ' +
+      'Mujhe 3-din ka step-by-step recovery plan dein Roman Urdu mein. ' +
+      'Realistic aur actionable rakhein.'
+  };
+
+  const prompt = prompts[type] || prompts.motivate;
+
+  try {
+    const text = await callGemini(prompt);
+    output.textContent = text;
+    playSound('success');
+    vibrate([30, 20, 30]);
+  } catch (err) {
+    output.innerHTML = '❌ <strong>Error:</strong> ' + escapeHtml(err.message) +
+      '<br><br><small style="color:var(--text3)">Check karein: (1) API key sahi hai, (2) internet on hai, (3) Gemini free tier available hai.</small>';
+    playSound('error');
+  } finally {
+    btns.forEach(b => b.disabled = false);
+  }
+};
+
+/* ==================== AI CHAT ==================== */
+
+let chatHistory = [];
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const box = document.getElementById('chatBox');
+  if (!input || !box) return;
+
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  if (!state.apiKey) {
+    showToast('Pehle API key daalein (Settings mein)', true);
+    return;
+  }
+
+  input.value = '';
+
+  // Add user message
+  addChatMessage('user', msg);
+
+  // Add thinking indicator
+  const thinkingId = 'thinking-' + Date.now();
+  const thinkingEl = document.createElement('div');
+  thinkingEl.className = 'chat-msg ai';
+  thinkingEl.id = thinkingId;
+  thinkingEl.innerHTML = '<span class="spinner"></span> Typing...';
+  box.appendChild(thinkingEl);
+  box.scrollTop = box.scrollHeight;
+
+  const ctx = getFullContext();
+  const name = state.name || 'User';
+
+  const prompt =
+    'Tu mera personal habit coach hai. Mera naam ' + name + ' hai.\n\n' +
+    'Mera current data:\n' + ctx + '\n\n' +
+    'Mera sawal: ' + msg + '\n\n' +
+    'Jawab Roman Urdu mein de, short aur helpful (max 100 words). Direct aur friendly tone rakhein. ' +
+    'Agar koi aisa sawal hai jo habit tracking se related nahi, to politely redirect karein.';
+
+  try {
+    const text = await callGemini(prompt, { maxOutputTokens: 300 });
+
+    // Remove thinking
+    const thinking = document.getElementById(thinkingId);
+    if (thinking) thinking.remove();
+
+    addChatMessage('ai', text);
+    playSound('success');
+  } catch (err) {
+    const thinking = document.getElementById(thinkingId);
+    if (thinking) {
+      thinking.innerHTML = '❌ ' + escapeHtml(err.message);
+    }
+    playSound('error');
+  }
+}
+
+function addChatMessage(who, text) {
+  const box = document.getElementById('chatBox');
+  if (!box) return;
+
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + who;
+  div.textContent = text;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+
+  // Save to state
+  if (!state.chatHistory) state.chatHistory = [];
+  state.chatHistory.push({
+    who: who,
+    text: text,
+    at: new Date().toISOString()
+  });
+
+  // Keep last 50 messages
+  if (state.chatHistory.length > 50) {
+    state.chatHistory = state.chatHistory.slice(-50);
+  }
+
+  save();
+}
+
+window.clearChat = function() {
+  if (!confirm('Chat clear karein?')) return;
+  const box = document.getElementById('chatBox');
+  if (box) {
+    box.innerHTML = '<div class="chat-msg ai">Chat clear ho gayi. Naya sawal poochein!</div>';
+  }
+  state.chatHistory = [];
+  save();
+  playSound('click');
+  showToast('Chat cleared');
+};
+
+window.sendChat = sendChat;
+
+/* ==================== RESTORE CHAT ON LOAD ==================== */
+
+function restoreChat() {
+  const box = document.getElementById('chatBox');
+  if (!box) return;
+
+  const history = state.chatHistory || [];
+  if (history.length === 0) return;
+
+  box.innerHTML = '';
+  history.slice(-20).forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + m.who;
+    div.textContent = m.text;
+    box.appendChild(div);
+  });
+
+  box.scrollTop = box.scrollHeight;
+}
+
+/* ==================== SMART INSIGHTS ==================== */
+
+window.generateSmartInsight = async function() {
+  if (!state.apiKey) {
+    showToast('API key daalein pehle', true);
+    return;
+  }
+
+  const ctx = getFullContext();
+  const prompt =
+    'Mere habit data ka analysis karein:\n\n' + ctx + '\n\n' +
+    '3 interesting insights dein Roman Urdu mein jo maine notice nahi kiye. ' +
+    'Har insight 2 lines ka ho. Patterns, correlations, ya surprising cheezein dhoondein.';
+
+  try {
+    showToast('AI analyze kar raha hai...', false, true);
+    const text = await callGemini(prompt, { maxOutputTokens: 400 });
+
+    // Show in modal
+    const output = document.getElementById('aiOutput');
+    if (output) {
+      output.textContent = '💡 ' + text;
+    }
+
+    // Switch to AI page if not already
+    switchPage('ai');
+
+    playSound('success');
+  } catch (err) {
+    showToast('Error: ' + err.message, true);
+  }
+};
+
+/* ==================== AI INSIGHTS ON HOME ==================== */
+
+async function showHomeInsight() {
+  if (!state.apiKey) return;
+  if (state.habits.length === 0) return;
+
+  const ctx = getFullContext();
+  const prompt =
+    'Mere data ke hisaab se ek chhoti si motivational line dein Roman Urdu mein (max 15 words). ' +
+    'Context:\n' + ctx;
+
+  try {
+    const text = await callGemini(prompt, { maxOutputTokens: 60 });
+    const quoteText = document.getElementById('dailyQuoteText');
+    if (quoteText) {
+      quoteText.textContent = text;
+      const author = document.getElementById('dailyQuoteAuthor');
+      if (author) author.textContent = '— AI Coach';
+    }
+  } catch (err) {
+    // Silently fail — keep default quote
+    console.log('AI insight failed:', err.message);
+  }
+}
+
+window.refreshAIQuote = function() {
+  if (!state.apiKey) {
+    showToast('API key daalein pehle', true);
+    return;
+  }
+  showHomeInsight();
+  playSound('click');
+};
+
+/* ==================== AI BUTTONS INITIALIZATION ==================== */
+
+function initAIButtons() {
+  // These are auto-bound via onclick in HTML
+  // Just verify they exist
+
+  // Add "Smart Insight" button if not present
+  const aiBtns = document.querySelector('.ai-btns');
+  if (aiBtns && !document.getElementById('btnSmartInsight')) {
+    const btn = document.createElement('button');
+    btn.className = 'ai-btn';
+    btn.id = 'btnSmartInsight';
+    btn.textContent = '💡 Smart Insight';
+    btn.onclick = generateSmartInsight;
+    aiBtns.appendChild(btn);
+  }
+}
+
+/* ==================== EXTEND SWITCH PAGE ==================== */
+
+const _origSwitchPage2 = window.switchPage;
+window.switchPage = function(page, ev) {
+  _origSwitchPage2(page, ev);
+
+  setTimeout(() => {
+    if (page === 'ai') {
+      restoreChat();
+    }
+  }, 50);
+};
+
+/* ==================== KEYBOARD SHORTCUTS ==================== */
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  // Ctrl/Cmd + K = Focus chat input
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    const chatInput = document.getElementById('chatInput');
+    if (chatInput) {
+      switchPage('ai');
+      setTimeout(() => chatInput.focus(), 100);
+    }
+  }
+});
+
+/* ==================== INITIALIZATION ==================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    restoreChat();
+    initAIButtons();
+  }, 2400);
+});
+
+console.log('✅ Part 11 loaded — AI Coach');
+</script>
+  <script>
+/* ============================================================
+   FABULOUS CLONE — Part 12
+   Final Polish + PWA + Notifications + Daily Reset
+   ============================================================ */
+
+/* ==================== PWA SERVICE WORKER ==================== */
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    const swCode =
+      'const CACHE_NAME = "fabulous-v1";\n' +
+      'const ASSETS = ["./", "./index.html"];\n' +
+      '\n' +
+      'self.addEventListener("install", event => {\n' +
+      '  self.skipWaiting();\n' +
+      '  event.waitUntil(\n' +
+      '    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS).catch(() => {}))\n' +
+      '  );\n' +
+      '});\n' +
+      '\n' +
+      'self.addEventListener("activate", event => {\n' +
+      '  event.waitUntil(\n' +
+      '    caches.keys().then(keys => {\n' +
+      '      return Promise.all(\n' +
+      '        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))\n' +
+      '      );\n' +
+      '    }).then(() => self.clients.claim())\n' +
+      '  );\n' +
+      '});\n' +
+      '\n' +
+      'self.addEventListener("fetch", event => {\n' +
+      '  if (event.request.method !== "GET") return;\n' +
+      '  event.respondWith(\n' +
+      '    caches.match(event.request).then(cached => {\n' +
+      '      if (cached) return cached;\n' +
+      '      return fetch(event.request).then(response => {\n' +
+      '        if (!response || response.status !== 200) return response;\n' +
+      '        const clone = response.clone();\n' +
+      '        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));\n' +
+      '        return response;\n' +
+      '      }).catch(() => cached);\n' +
+      '    })\n' +
+      '  );\n' +
+      '});\n';
+
+    try {
+      const blob = new Blob([swCode], { type: 'application/javascript' });
+      const swUrl = URL.createObjectURL(blob);
+      navigator.serviceWorker.register(swUrl).then(() => {
+        console.log('✅ Service Worker registered');
+      }).catch(err => {
+        console.log('SW registration failed:', err);
+      });
+    } catch (e) {
+      console.log('SW error:', e);
+    }
+  });
+}
+
+/* ==================== NOTIFICATIONS ==================== */
+
+function requestNotificationPermission() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') return;
+  if (Notification.permission === 'denied') return;
+
+  // Request after 5 seconds (not immediately)
+  setTimeout(() => {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        showToast('Notifications on ho gayi 🔔');
+      }
+    });
+  }, 5000);
+}
+
+function sendNotification(title, body) {
+  if (!('Notification' in window)) return;
+  if (Notification.permission !== 'granted') return;
+
+  try {
+    const notif = new Notification(title, {
+      body: body,
+      icon: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#ff6b9d"/><text x="50" y="70" font-size="60" text-anchor="middle">✨</text></svg>'),
+      badge: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#ff6b9d"/><text x="50" y="70" font-size="60" text-anchor="middle">✨</text></svg>'),
+      vibrate: [200, 100, 200],
+      tag: 'fabulous-reminder',
+      renotify: true
+    });
+
+    notif.onclick = () => {
+      window.focus();
+      notif.close();
+    };
+
+    setTimeout(() => notif.close(), 10000);
+  } catch (e) {
+    console.log('Notification error:', e);
+  }
+}
+
+/* ==================== REMINDER CHECKER ==================== */
+
+let lastReminderCheck = '';
+
+function checkReminders() {
+  const now = new Date();
+  const currentTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+  // Only run once per minute
+  if (currentTime === lastReminderCheck) return;
+  lastReminderCheck = currentTime;
+
+  const doneToday = state.log[TODAY] || [];
+  const pending = state.habits.filter(h => !h.archived && !doneToday.includes(h.id));
+
+  if (pending.length === 0) return;
+
+  // Check if user set a wake time — notify around then
+  const wakeTime = state.wakeTime || '07:00';
+  const [wakeH, wakeM] = wakeTime.split(':').map(Number);
+  const wakeTotal = wakeH * 60 + wakeM;
+  const nowTotal = now.getHours() * 60 + now.getMinutes();
+
+  // Morning reminder (wake time + 5 min)
+  if (nowTotal === wakeTotal + 5) {
+    sendNotification(
+      '🌅 Good morning, ' + (state.name || 'Friend') + '!',
+      pending.length + ' rituals aaj ke liye ready hain. Shuru karein?'
+    );
+  }
+
+  // Mid-day check (12:00)
+  if (nowTotal === 12 * 60) {
+    const doneCount = doneToday.length;
+    const total = state.habits.filter(h => !h.archived).length;
+    if (doneCount < total) {
+      sendNotification(
+        '☀️ Half day check-in',
+        doneCount + '/' + total + ' rituals complete. Baaki ' + (total - doneCount) + ' ka intezar hai!'
+      );
+    }
+  }
+
+  // Evening check (18:00)
+  if (nowTotal === 18 * 60) {
+    if (pending.length > 0) {
+      sendNotification(
+        '🌆 Evening reminder',
+        pending.length + ' rituals aaj reh gaye. Abhi complete karein!'
+      );
+    }
+  }
+
+  // Night check (21:00)
+  if (nowTotal === 21 * 60) {
+    if (pending.length > 0) {
+      sendNotification(
+        '🌙 Aakhri reminder',
+        'Aaj ke ' + pending.length + ' rituals abhi bhi pending hain. Streak bachayein!'
+      );
+    } else if (doneToday.length > 0) {
+      sendNotification(
+        '🎉 Perfect Day!',
+        'Aaj ke saare rituals complete! Shabash, ' + (state.name || 'Friend') + '!'
+      );
+    }
+  }
+
+  // Water reminder (every 2 hours between 9-18)
+  if (now.getHours() >= 9 && now.getHours() <= 18 && now.getHours() % 2 === 1 && now.getMinutes() === 0) {
+    const waterCount = (state.water && state.water[TODAY]) || 0;
+    if (waterCount < 8) {
+      sendNotification(
+        '💧 Paani time!',
+        waterCount + '/8 glasses. Thora paani piyein!'
+      );
+    }
+  }
+}
+
+// Check every 60 seconds
+setInterval(checkReminders, 60000);
+
+/* ==================== DAILY RESET CHECK ==================== */
+
+let lastKnownDay = TODAY;
+
+function checkDailyReset() {
+  const now = new Date();
+  const currentDay = dateKey(now);
+
+  if (currentDay !== lastKnownDay) {
+    lastKnownDay = currentDay;
+    console.log('🌅 New day detected:', currentDay);
+
+    // Reload the page to reset views
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
+
+    showToast('Naya din shuru! 🌅', false, true);
+  }
+}
+
+setInterval(checkDailyReset, 60000);
+
+// Also check on visibility change (when user returns to tab)
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    checkDailyReset();
+    checkReminders();
+  }
+});
+
+/* ==================== INSTALL PROMPT ==================== */
+
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  console.log('Install prompt available');
+
+  // Show custom install button after 30 seconds
+  setTimeout(() => {
+    if (deferredInstallPrompt && !state.installDismissed) {
+      showInstallBanner();
+    }
+  }, 30000);
+});
+
+function showInstallBanner() {
+  // Check if banner already shown
+  if (document.getElementById('installBanner')) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'installBanner';
+  banner.style.cssText =
+    'position:fixed;bottom:100px;left:16px;right:16px;background:linear-gradient(135deg,#ff6b9d,#c084fc);' +
+    'border-radius:20px;padding:16px;z-index:150;box-shadow:0 15px 40px rgba(255,107,157,.4);' +
+    'display:flex;align-items:center;gap:12px;animation:slideUp .4s';
+
+  banner.innerHTML =
+    '<div style="font-size:32px">📱</div>' +
+    '<div style="flex:1">' +
+      '<div style="color:#fff;font-weight:800;font-size:14px;margin-bottom:2px">Install Fabulous</div>' +
+      '<div style="color:rgba(255,255,255,.85);font-size:11px">Home screen par add karein</div>' +
+    '</div>' +
+    '<button onclick="installApp()" style="background:#fff;color:#ff6b9d;border:none;padding:10px 16px;border-radius:12px;font-weight:800;font-size:12px;cursor:pointer">Install</button>' +
+    '<button onclick="dismissInstall()" style="background:transparent;color:#fff;border:none;font-size:20px;cursor:pointer;padding:4px 8px">×</button>';
+
+  document.body.appendChild(banner);
+}
+
+window.installApp = async function() {
+  if (!deferredInstallPrompt) {
+    showToast('Install option abhi available nahi', true);
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+  console.log('Install outcome:', outcome);
+
+  if (outcome === 'accepted') {
+    showToast('🎉 Fabulous install ho gaya!');
+    playSound('celebrate');
+  }
+
+  deferredInstallPrompt = null;
+  dismissInstall();
+};
+
+window.dismissInstall = function() {
+  const banner = document.getElementById('installBanner');
+  if (banner) banner.remove();
+  state.installDismissed = true;
+  save();
+};
+
+/* ==================== ONLINE / OFFLINE ==================== */
+
+window.addEventListener('online', () => {
+  showToast('🟢 Back online', false, true);
+});
+
+window.addEventListener('offline', () => {
+  showToast('🔴 Offline mode — data safe hai', false, true);
+});
+
+/* ==================== KEYBOARD SHORTCUTS (Enhanced) ==================== */
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  // Number keys 1-4 for page switching
+  if (e.key === '1') switchPage('home');
+  else if (e.key === '2') switchPage('journeys');
+  else if (e.key === '3') switchPage('stats');
+  else if (e.key === '4') switchPage('journal');
+  else if (e.key === '5') switchPage('ai');
+
+  // 'n' for new habit
+  else if (e.key === 'n' || e.key === 'N') {
+    e.preventDefault();
+    openAddHabit();
+  }
+
+  // 'f' for focus timer
+  else if (e.key === 'f' || e.key === 'F') {
+    e.preventDefault();
+    openFocusTimer();
+  }
+
+  // 'b' for breathing
+  else if (e.key === 'b' || e.key === 'B') {
+    e.preventDefault();
+    openBreathing();
+  }
+
+  // 'w' for water
+  else if (e.key === 'w' || e.key === 'W') {
+    e.preventDefault();
+    openWaterTracker();
+  }
+
+  // 'j' for journal
+  else if (e.key === 'j' || e.key === 'J') {
+    e.preventDefault();
+    openJournalModal();
+  }
+});
+
+/* ==================== HAPTIC FEEDBACK (Already in playSound/vibrate) ==================== */
+
+/* ==================== AUTO-SAVE BEFORE CLOSE ==================== */
+
+window.addEventListener('beforeunload', () => {
+  try {
+    save();
+  } catch (e) {}
+});
+
+/* ==================== PREVENT ZOOM ON DOUBLE TAP (Mobile) ==================== */
+
+let lastTouchEnd = 0;
+document.addEventListener('touchend', (e) => {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+}, { passive: false });
+
+/* ==================== SMOOTH SCROLL ==================== */
+
+document.documentElement.style.scrollBehavior = 'smooth';
+
+/* ==================== CONSOLE MESSAGE ==================== */
+
+console.log(
+  '%c🎉 FABULOUS CLONE — Complete!\n' +
+  '%c Duniya ki sab se behtar habit tracker app ready hai!\n' +
+  ' Total: 12 parts, 100% working.',
+  'color:#ff6b9d;font-size:20px;font-weight:bold',
+  'color:#c084fc;font-size:13px'
+);
+
+/* ==================== FINAL INITIALIZATION ==================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🚀 Final initialization starting...');
+
+  // Request notification permission after splash
+  setTimeout(() => {
+    if (state.onboarded) {
+      requestNotificationPermission();
+    }
+  }, 3000);
+
+  // Re-render everything after all parts loaded
+  setTimeout(() => {
+    try {
+      if (typeof renderRitualsToday === 'function') renderRitualsToday();
+      if (typeof renderStats === 'function') renderStats();
+      if (typeof renderJournal === 'function') renderJournal();
+      if (typeof renderJourneys === 'function') renderJourneys();
+      if (typeof renderHomeProgress === 'function') renderHomeProgress();
+      if (typeof updateFocusStats === 'function') updateFocusStats();
+      console.log('✅ All renders complete');
+    } catch (e) {
+      console.log('Render error:', e);
+    }
+  }, 2600);
+
+  // Hide splash even if something failed
+  setTimeout(() => {
+    const splash = document.getElementById('splashScreen');
+    if (splash && !splash.classList.contains('hide')) {
+      splash.classList.add('hide');
+      setTimeout(() => splash.style.display = 'none', 600);
+    }
+  }, 3500);
+
+  console.log('✅ Part 12 loaded — All systems GO!');
+});
+
+/* ==================== VERSION CHECK ==================== */
+
+const APP_VERSION = '1.0.0';
+console.log('📱 Fabulous v' + APP_VERSION);
+
+/* ==================== WELCOME MESSAGE FOR RETURNING USERS ==================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    if (state.onboarded && state.name) {
+      const hour = new Date().getHours();
+      let greeting = 'Salam';
+      if (hour < 12) greeting = 'Subah bakhair';
+      else if (hour < 17) greeting = 'Salam';
+      else greeting = 'Shab bakhair';
+
+      // Only show welcome toast on first load of the day
+      const lastVisit = localStorage.getItem('fabulous_last_visit');
+      if (lastVisit !== TODAY) {
+        localStorage.setItem('fabulous_last_visit', TODAY);
+        setTimeout(() => {
+          showToast(greeting + ', ' + state.name + '! 👋');
+        }, 500);
+      }
+    }
+  }, 3000);
+});
+
+console.log('✅ Part 12 COMPLETE — Fabulous app ready! 🎉');
+</script>
 </body>
 </html>
