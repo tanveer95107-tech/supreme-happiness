@@ -852,8 +852,1424 @@ button{font-family:inherit}
 <div class="toast" id="toast"></div>
 
 <!-- ========== SCRIPTS ========== -->
-<script>
+
 // PART 2 — JavaScript yahan aayega
+  /* ============================================================
+   HABITAI PRO — COMPLETE JAVASCRIPT ENGINE
+   Version 2.0 — Professional Edition
+   ============================================================ */
+
+/* ============ CONSTANTS & STATE ============ */
+const TODAY = new Date().toISOString().slice(0, 10);
+const STORAGE_KEY = 'habitai_pro_v1';
+
+let state = {
+  habits: [],
+  log: {},          // { 'YYYY-MM-DD': [habitId1, habitId2] }
+  progress: {},     // { 'YYYY-MM-DD': { habitId: count/duration } }
+  moodLog: {},      // { 'YYYY-MM-DD': mood }
+  notes: {},        // { 'YYYY-MM-DD': { habitId: 'note' } }
+  journal: {},      // { 'YYYY-MM-DD': { text, gratitude, mood } }
+  apiKey: '',
+  userName: '',
+  theme: 'dark',
+  xp: 0,
+  achievements: [],
+  chat: [],
+  pin: '',
+  sound: 'on',
+  onboarded: false,
+  currentFilter: 'all',
+  currentCategory: 'all',
+  currentHeatmap: 90,
+  editingHabitId: null,
+  currentDetailId: null,
+  checkinHabitId: null,
+  checkinMood: null,
+  journalMood: null
+};
+
+// Load state from localStorage
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) state = { ...state, ...JSON.parse(saved) };
+} catch (e) { console.error('Load error:', e); }
+
+function save() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.error('Save error:', e);
+    showToast('Data save nahi ho saka — storage full', true);
+  }
+}
+
+/* ============ DATA CONSTANTS ============ */
+const ACHIEVEMENTS = [
+  { id: 'first', icon: '👶', name: 'Pehla Qadam', desc: '1 habit complete' },
+  { id: 'streak3', icon: '🔥', name: '3-Din', desc: '3 din lagatar' },
+  { id: 'streak7', icon: '⚡', name: 'Hafta War', desc: '7 din lagatar' },
+  { id: 'streak30', icon: '🏆', name: 'Mahina War', desc: '30 din lagatar' },
+  { id: 'streak100', icon: '👑', name: '100 Din', desc: '100 din lagatar' },
+  { id: 'level5', icon: '⭐', name: 'Level 5', desc: 'Level 5 tak' },
+  { id: 'level10', icon: '🌟', name: 'Level 10', desc: 'Level 10 tak' },
+  { id: 'perfect', icon: '💯', name: 'Perfect Day', desc: 'Saare habits ek din' },
+  { id: 'xp500', icon: '💎', name: '500 XP', desc: '500 XP kamayein' },
+  { id: 'xp2000', icon: '💠', name: '2000 XP', desc: '2000 XP kamayein' },
+  { id: 'chatty', icon: '💬', name: 'Chatty', desc: '10 AI messages' },
+  { id: 'journal7', icon: '📔', name: 'Journalist', desc: '7 din journal' }
+];
+
+const EMOJIS = ['🏃','💪','📚','🧘','💧','🥗','😴','💻','✍️','🎯','🚭','🙏','🎸','🎨','🧹','💰','📵','🚶','🍎','🛏️','🧠','❤️','🌱','⭐'];
+
+const COLORS = ['#6366f1','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899','#84cc16','#f97316','#14b8a6'];
+
+const QUOTES = [
+  { t: 'Aaj ka chhota qadam, kal ki badi manzil.', a: 'HabitAI' },
+  { t: 'Aadat hi kismat banati hai.', a: 'Anonymous' },
+  { t: 'Success chhote chhote din ka jama hai.', a: 'Robert Collier' },
+  { t: 'Jo aaj karega, woh kal ka hero banega.', a: 'HabitAI' },
+  { t: '30 din mein aadat, 90 din mein zindagi badalti hai.', a: 'Anonymous' },
+  { t: 'Motivation temporary, habit permanent.', a: 'Jim Ryun' },
+  { t: 'Ek din chhoda, aur streak khatam.', a: 'HabitAI' }
+];
+
+const TEMPLATES = [
+  { emoji: '💧', name: '8 Glass Paani', type: 'count', target: 8, cat: 'health' },
+  { emoji: '🏃', name: '30 min Walk', type: 'duration', target: 30, cat: 'fitness' },
+  { emoji: '📚', name: '30 min Padhai', type: 'duration', target: 30, cat: 'learning' },
+  { emoji: '🧘', name: '10 min Meditation', type: 'duration', target: 10, cat: 'mind' },
+  { emoji: '💪', name: 'Pushups 50', type: 'count', target: 50, cat: 'fitness' },
+  { emoji: '😴', name: '7-8 Ghante Neend', type: 'boolean', cat: 'health' },
+  { emoji: '🚭', name: 'Smoking Nahi', type: 'negative', cat: 'health' },
+  { emoji: '📵', name: 'Social Media Kam', type: 'negative', cat: 'mind' },
+  { emoji: '✍️', name: 'Rozana Journal', type: 'boolean', cat: 'mind' },
+  { emoji: '💻', name: '1 Ghanta Coding', type: 'duration', target: 60, cat: 'work' },
+  { emoji: '🙏', name: 'Namaz/Shukar', type: 'boolean', cat: 'mind' },
+  { emoji: '🍎', name: '2 Fruits', type: 'count', target: 2, cat: 'health' },
+  { emoji: '🚶', name: '10,000 Steps', type: 'count', target: 10000, cat: 'fitness' },
+  { emoji: '💰', name: 'Rozana Bachat', type: 'boolean', cat: 'finance' },
+  { emoji: '🎸', name: 'Practice Music', type: 'duration', target: 20, cat: 'other' },
+  { emoji: '🧹', name: 'Kamra Saaf', type: 'boolean', cat: 'other' },
+  { emoji: '🚭', name: 'Sugar Nahi', type: 'negative', cat: 'health' },
+  { emoji: '📱', name: 'Phone Subah 1 Ghanta Off', type: 'boolean', cat: 'mind' }
+];
+
+/* ============ UTILITIES ============ */
+function todayKey() { return TODAY; }
+function dateKey(d) { return d.toISOString().slice(0, 10); }
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function showToast(msg, isError, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : type === 'info' ? ' info' : '');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.className = 'toast', 2500);
+}
+
+function playSound(type) {
+  if (state.sound === 'off') return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    if (type === 'done') { osc.frequency.value = 800; gain.gain.value = 0.1; }
+    else if (type === 'error') { osc.frequency.value = 300; gain.gain.value = 0.1; }
+    else { osc.frequency.value = 600; gain.gain.value = 0.05; }
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+    osc.stop(ctx.currentTime + 0.2);
+  } catch (e) {}
+}
+
+function vibrate(ms = 20) {
+  if ('vibrate' in navigator) navigator.vibrate(ms);
+}
+
+/* ============ THEME ============ */
+function applyTheme(theme) {
+  state.theme = theme;
+  document.body.setAttribute('data-theme', theme);
+  const btn = document.querySelector('.header-actions .icon-btn');
+  if (btn) {
+    const icons = { dark: '🌙', light: '☀️', ocean: '🌊', sunset: '🌅', forest: '🌲' };
+    btn.textContent = icons[theme] || '🌙';
+  }
+  save();
+}
+
+function toggleTheme() {
+  const order = ['dark', 'light', 'ocean', 'sunset', 'forest'];
+  const idx = order.indexOf(state.theme);
+  const next = order[(idx + 1) % order.length];
+  applyTheme(next);
+  showToast('Theme: ' + next, false, 'info');
+}
+
+/* ============ GREETING ============ */
+function updateGreeting() {
+  const now = new Date();
+  const h = now.getHours();
+  let greet = 'Assalam-o-alaikum';
+  if (h < 5) greet = 'Assalam-o-alaikum, Late night';
+  else if (h < 12) greet = 'Assalam-o-alaikum, Subah bakhair';
+  else if (h < 17) greet = 'Assalam-o-alaikum';
+  else if (h < 20) greet = 'Assalam-o-alaikum, Shab bakhair';
+  else greet = 'Assalam-o-alaikum, Good night';
+
+  const name = state.userName ? ', ' + state.userName : '';
+  const date = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+  document.getElementById('greet').textContent = greet + name + ' • ' + date;
+}
+
+/* ============ PAGE SWITCHING ============ */
+function switchPage(page, ev) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+
+  if (ev && ev.target) {
+    const navBtn = ev.target.closest('.nav-item');
+    if (navBtn) navBtn.classList.add('active');
+  }
+
+  if (page === 'stats') renderStats();
+  if (page === 'journal') renderJournal();
+}
+
+/* ============ FILTER & SORT ============ */
+function filterHabits(filter) {
+  state.currentFilter = filter;
+  document.querySelectorAll('[data-filter]').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === filter);
+  });
+  render();
+}
+
+/* ============ CATEGORY CHIPS ============ */
+function renderCategoryChips() {
+  const cats = ['all', 'health', 'fitness', 'learning', 'mind', 'work', 'social', 'finance', 'other'];
+  const labels = { all: '🎯 Sab', health: '🏥', fitness: '💪', learning: '📚', mind: '🧘', work: '💻', social: '👥', finance: '💰', other: '📦' };
+  const chipBox = document.getElementById('catChips');
+  if (!chipBox) return;
+
+  chipBox.innerHTML = cats.map(c =>
+    `<button class="chip ${state.currentCategory === c ? 'active' : ''}" onclick="filterCategory('${c}')">${labels[c]} ${c !== 'all' ? c : ''}</button>`
+  ).join('');
+}
+
+function filterCategory(cat) {
+  state.currentCategory = cat;
+  renderCategoryChips();
+  render();
+}
+
+/* ============ HABIT OPERATIONS ============ */
+function quickAddHabit(e) {
+  e.preventDefault();
+  const input = document.getElementById('habitInput');
+  const name = input.value.trim();
+  if (!name) return;
+
+  state.habits.push({
+    id: Date.now(),
+    name,
+    emoji: '🎯',
+    color: COLORS[state.habits.length % COLORS.length],
+    type: 'boolean',
+    target: 1,
+    category: 'other',
+    reminder: '',
+    notes: '',
+    created: TODAY,
+    archived: false,
+    order: state.habits.length
+  });
+
+  input.value = '';
+  save();
+  render();
+  playSound('done');
+  vibrate(30);
+  showToast('Habit add ho gaya! 🎉');
+}
+
+/* ============ HABIT MODAL ============ */
+let pendingEmoji = '🏃';
+let pendingColor = '#6366f1';
+
+function buildEmojiPicker() {
+  const picker = document.getElementById('emojiPicker');
+  if (!picker) return;
+  picker.innerHTML = EMOJIS.map((e, i) =>
+    `<span data-emoji="${e}" class="${i === 0 ? 'selected' : ''}">${e}</span>`
+  ).join('');
+  picker.querySelectorAll('span').forEach(s => {
+    s.onclick = () => {
+      picker.querySelectorAll('span').forEach(x => x.classList.remove('selected'));
+      s.classList.add('selected');
+      pendingEmoji = s.dataset.emoji;
+    };
+  });
+}
+
+function buildColorPicker() {
+  const picker = document.getElementById('colorPicker');
+  if (!picker) return;
+  picker.innerHTML = COLORS.map((c, i) =>
+    `<div data-color="${c}" class="${i === 0 ? 'selected' : ''}" style="background:${c}"></div>`
+  ).join('');
+  picker.querySelectorAll('div').forEach(d => {
+    d.onclick = () => {
+      picker.querySelectorAll('div').forEach(x => x.classList.remove('selected'));
+      d.classList.add('selected');
+      pendingColor = d.dataset.color;
+    };
+  });
+}
+
+function openHabitModal(editId) {
+  state.editingHabitId = editId || null;
+  const modal = document.getElementById('habitModal');
+  const title = document.getElementById('habitModalTitle');
+
+  if (editId) {
+    const h = state.habits.find(x => x.id === editId);
+    if (!h) return;
+    title.textContent = '✏️ Habit Edit';
+    document.getElementById('newHabitName').value = h.name;
+    document.getElementById('newHabitType').value = h.type || 'boolean';
+    document.getElementById('newHabitTarget').value = h.target || 1;
+    document.getElementById('newHabitCat').value = h.category || 'other';
+    document.getElementById('newHabitReminder').value = h.reminder || '';
+    document.getElementById('newHabitNotes').value = h.notes || '';
+    pendingEmoji = h.emoji || '🎯';
+    pendingColor = h.color || '#6366f1';
+    document.getElementById('saveHabitBtn').textContent = 'Update';
+  } else {
+    title.textContent = '➕ Naya Habit';
+    document.getElementById('newHabitName').value = '';
+    document.getElementById('newHabitType').value = 'boolean';
+    document.getElementById('newHabitTarget').value = 1;
+    document.getElementById('newHabitCat').value = 'health';
+    document.getElementById('newHabitReminder').value = '';
+    document.getElementById('newHabitNotes').value = '';
+    document.getElementById('saveHabitBtn').textContent = 'Save';
+  }
+
+  onTypeChange();
+  modal.classList.add('show');
+}
+
+function closeHabitModal() {
+  document.getElementById('habitModal').classList.remove('show');
+  state.editingHabitId = null;
+}
+
+function onTypeChange() {
+  const type = document.getElementById('newHabitType').value;
+  const wrap = document.getElementById('targetWrap');
+  if (type === 'boolean' || type === 'negative') {
+    wrap.style.display = 'none';
+  } else {
+    wrap.style.display = 'block';
+  }
+}
+
+function saveNewHabit() {
+  const name = document.getElementById('newHabitName').value.trim();
+  if (!name) { showToast('Naam likhein!', true); playSound('error'); return; }
+
+  const type = document.getElementById('newHabitType').value;
+  const target = parseInt(document.getElementById('newHabitTarget').value) || 1;
+  const cat = document.getElementById('newHabitCat').value;
+  const reminder = document.getElementById('newHabitReminder').value;
+  const notes = document.getElementById('newHabitNotes').value;
+
+  if (state.editingHabitId) {
+    const h = state.habits.find(x => x.id === state.editingHabitId);
+    if (h) {
+      Object.assign(h, { name, type, target, category: cat, reminder, notes, emoji: pendingEmoji, color: pendingColor });
+    }
+    showToast('Habit update ho gaya ✓');
+  } else {
+    state.habits.push({
+      id: Date.now(), name, type, target, category: cat, reminder, notes,
+      emoji: pendingEmoji, color: pendingColor, created: TODAY,
+      archived: false, order: state.habits.length
+    });
+    showToast('Habit add ho gaya! 🎉');
+  }
+
+  save();
+  closeHabitModal();
+  render();
+  playSound('done');
+  vibrate(30);
+}
+
+function deleteHabit(id) {
+  if (!confirm('Is habit ko delete karein? Yeh wapas nahi aayega.')) return;
+  state.habits = state.habits.filter(h => h.id !== id);
+  Object.keys(state.log).forEach(k => {
+    state.log[k] = (state.log[k] || []).filter(x => x !== id);
+  });
+  save();
+  render();
+  showToast('Habit delete ho gaya');
+  playSound('error');
+}
+
+/* ============ CHECK-IN (with modal) ============ */
+function toggleHabit(id) {
+  const habit = state.habits.find(h => h.id === id);
+  if (!habit) return;
+
+  const doneToday = state.log[TODAY] || [];
+  const isDone = doneToday.includes(id);
+
+  if (habit.type === 'duration') {
+    openTimer(id);
+    return;
+  }
+
+  if (habit.type === 'count') {
+    const current = (state.progress[TODAY] && state.progress[TODAY][id]) || 0;
+    if (current < habit.target) {
+      if (!state.progress[TODAY]) state.progress[TODAY] = {};
+      state.progress[TODAY][id] = current + 1;
+      if (state.progress[TODAY][id] >= habit.target) {
+        if (!state.log[TODAY]) state.log[TODAY] = [];
+        if (!state.log[TODAY].includes(id)) state.log[TODAY].push(id);
+        state.xp += 10;
+        playSound('done');
+        vibrate(50);
+      }
+      save();
+      render();
+      return;
+    }
+  }
+
+  if (isDone) {
+    if (!state.log[TODAY]) state.log[TODAY] = [];
+    state.log[TODAY] = state.log[TODAY].filter(x => x !== id);
+    if (state.progress[TODAY]) state.progress[TODAY][id] = 0;
+    save();
+    render();
+    return;
+  }
+
+  // Open check-in modal for mood/note
+  state.checkinHabitId = id;
+  state.checkinMood = null;
+  document.getElementById('checkinTitle').textContent = habit.emoji + ' ' + habit.name;
+  document.getElementById('checkinNote').value = '';
+  document.querySelectorAll('#moodRow .mood-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('checkinModal').classList.add('show');
+}
+
+function closeCheckinModal() {
+  document.getElementById('checkinModal').classList.remove('show');
+  state.checkinHabitId = null;
+}
+
+function confirmCheckin() {
+  const id = state.checkinHabitId;
+  const habit = state.habits.find(h => h.id === id);
+  if (!habit) { closeCheckinModal(); return; }
+
+  if (!state.log[TODAY]) state.log[TODAY] = [];
+  if (!state.log[TODAY].includes(id)) state.log[TODAY].push(id);
+
+  if (habit.type === 'count' && state.progress[TODAY]) {
+    state.progress[TODAY][id] = habit.target;
+  }
+
+  const note = document.getElementById('checkinNote').value.trim();
+  if (note) {
+    if (!state.notes[TODAY]) state.notes[TODAY] = {};
+    state.notes[TODAY][id] = note;
+  }
+
+  if (state.checkinMood) {
+    state.moodLog[TODAY] = state.checkinMood;
+  }
+
+  state.xp += 10;
+  checkAchievements();
+  save();
+  closeCheckinModal();
+  render();
+  playSound('done');
+  vibrate(50);
+
+  const allDone = state.habits.filter(h => !h.archived).every(h => state.log[TODAY].includes(h.id));
+  if (allDone && state.habits.length > 0) celebrate();
+}
+
+// Mood buttons in check-in modal
+document.addEventListener('click', e => {
+  const moodBtn = e.target.closest('#moodRow .mood-btn');
+  if (moodBtn) {
+    document.querySelectorAll('#moodRow .mood-btn').forEach(b => b.classList.remove('selected'));
+    moodBtn.classList.add('selected');
+    state.checkinMood = parseInt(moodBtn.dataset.mood);
+  }
+
+  const jMoodBtn = e.target.closest('#journalMoodRow .mood-btn');
+  if (jMoodBtn) {
+    document.querySelectorAll('#journalMoodRow .mood-btn').forEach(b => b.classList.remove('selected'));
+    jMoodBtn.classList.add('selected');
+    state.journalMood = parseInt(jMoodBtn.dataset.mood);
+  }
+});
+
+/* ============ STREAK CALCULATION ============ */
+function getStreak(habitId) {
+  let streak = 0;
+  let d = new Date();
+  const doneToday = (state.log[TODAY] || []).includes(habitId);
+  if (!doneToday) d.setDate(d.getDate() - 1);
+
+  let safety = 0;
+  while (safety++ < 3650) {
+    const key = dateKey(d);
+    if ((state.log[key] || []).includes(habitId)) {
+      streak++;
+      d.setDate(d.getDate() - 1);
+    } else break;
+  }
+  return streak;
+}
+
+function getBestStreak(habitId) {
+  let best = 0, current = 0;
+  let d = new Date();
+  d.setFullYear(d.getFullYear() - 1);
+  for (let i = 0; i < 365; i++) {
+    const key = dateKey(d);
+    if ((state.log[key] || []).includes(habitId)) {
+      current++;
+      best = Math.max(best, current);
+    } else current = 0;
+    d.setDate(d.getDate() + 1);
+  }
+  return best;
+}
+
+function getCompletionRate(habitId, days = 30) {
+  let done = 0;
+  for (let i = 0; i < days; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = dateKey(d);
+    if ((state.log[key] || []).includes(habitId)) done++;
+  }
+  return Math.round((done / days) * 100);
+}
+
+/* ============ LEVEL & XP ============ */
+function getLevel() { return Math.floor(state.xp / 100) + 1; }
+function getLevelXP() { return state.xp % 100; }
+function getLevelName() {
+  const l = getLevel();
+  if (l < 3) return 'Beginner';
+  if (l < 7) return 'Learner';
+  if (l < 15) return 'Pro';
+  if (l < 30) return 'Master';
+  return 'Legend';
+}
+
+/* ============ ACHIEVEMENTS ============ */
+function checkAchievements() {
+  const totalDone = Object.values(state.log).flat().length;
+  const maxStreak = state.habits.reduce((m, h) => Math.max(m, getStreak(h.id)), 0);
+  const add = id => { if (!state.achievements.includes(id)) state.achievements.push(id); };
+
+  if (totalDone >= 1) add('first');
+  if (maxStreak >= 3) add('streak3');
+  if (maxStreak >= 7) add('streak7');
+  if (maxStreak >= 30) add('streak30');
+  if (maxStreak >= 100) add('streak100');
+  if (getLevel() >= 5) add('level5');
+  if (getLevel() >= 10) add('level10');
+  if (state.xp >= 500) add('xp500');
+  if (state.xp >= 2000) add('xp2000');
+  if (state.chat.length >= 10) add('chatty');
+  if (Object.keys(state.journal).length >= 7) add('journal7');
+  save();
+}
+
+/* ============ RENDER — MAIN ============ */
+function render() {
+  renderHabits();
+  renderStatsBar();
+  renderProgressRing();
+  updateGreeting();
+}
+
+function renderHabits() {
+  const list = document.getElementById('habitList');
+  if (!list) return;
+
+  const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const sort = document.getElementById('sortSelect')?.value || 'created';
+  const doneToday = state.log[TODAY] || [];
+
+  let habits = state.habits.filter(h => !h.archived);
+
+  if (state.currentCategory !== 'all') {
+    habits = habits.filter(h => h.category === state.currentCategory);
+  }
+
+  if (search) {
+    habits = habits.filter(h => h.name.toLowerCase().includes(search));
+  }
+
+  if (state.currentFilter === 'pending') {
+    habits = habits.filter(h => !doneToday.includes(h.id));
+  } else if (state.currentFilter === 'done') {
+    habits = habits.filter(h => doneToday.includes(h.id));
+  }
+
+  if (sort === 'name') habits.sort((a, b) => a.name.localeCompare(b.name));
+  else if (sort === 'streak') habits.sort((a, b) => getStreak(b.id) - getStreak(a.id));
+  else if (sort === 'category') habits.sort((a, b) => (a.category || '').localeCompare(b.category || ''));
+  else habits.sort((a, b) => (b.order || 0) - (a.order || 0));
+
+  if (habits.length === 0) {
+    list.innerHTML = '<div class="empty">Koi habit nahi mili.<br>Neeche + button se add karein 👇</div>';
+    return;
+  }
+
+  list.innerHTML = habits.map(h => {
+    const done = doneToday.includes(h.id);
+    const streak = getStreak(h.id);
+    const streakTxt = streak > 0 ? `🔥 ${streak} din` : 'Shuru karein';
+    const typeBadge = h.type === 'count' ? '<span class="habit-badge count">Counter</span>'
+      : h.type === 'duration' ? '<span class="habit-badge duration">Timer</span>'
+      : h.type === 'negative' ? '<span class="habit-badge negative">Avoid</span>' : '';
+
+    let progressBar = '';
+    if (h.type === 'count') {
+      const cur = (state.progress[TODAY] && state.progress[TODAY][h.id]) || 0;
+      const pct = Math.min(100, Math.round((cur / h.target) * 100));
+      progressBar = `<div class="habit-progress"><div class="habit-progress-fill" style="width:${pct}%"></div></div>
+        <div class="habit-meta" style="margin-top:4px">${cur}/${h.target}</div>`;
+    } else if (h.type === 'duration') {
+      const cur = (state.progress[TODAY] && state.progress[TODAY][h.id]) || 0;
+      const pct = Math.min(100, Math.round((cur / h.target) * 100));
+      progressBar = `<div class="habit-progress"><div class="habit-progress-fill" style="width:${pct}%"></div></div>
+        <div class="habit-meta" style="margin-top:4px">${cur}/${h.target} min</div>`;
+    }
+
+    return `
+      <div class="habit ${done ? 'done' : ''}" data-id="${h.id}">
+        <div class="habit-check" onclick="event.stopPropagation();toggleHabit(${h.id})">${done ? '✓' : ''}</div>
+        <div class="habit-info" onclick="openDetail(${h.id})">
+          <div class="habit-name">
+            <span>${h.emoji || '🎯'}</span>
+            <span>${escapeHtml(h.name)}</span>
+            ${typeBadge}
+          </div>
+          <div class="habit-meta">
+            <span class="habit-streak">${streakTxt}</span>
+            <span>• ${getCompletionRate(h.id)}%</span>
+          </div>
+          ${progressBar}
+        </div>
+        <div class="habit-actions">
+          <button onclick="event.stopPropagation();openHabitModal(${h.id})" title="Edit">✏️</button>
+          <button class="del" onclick="event.stopPropagation();deleteHabit(${h.id})" title="Delete">🗑</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderStatsBar() {
+  const doneToday = state.log[TODAY] || [];
+  document.getElementById('statTotal').textContent = state.habits.filter(h => !h.archived).length;
+  document.getElementById('statDone').textContent = doneToday.length;
+  const best = state.habits.reduce((m, h) => Math.max(m, getStreak(h.id)), 0);
+  document.getElementById('statBest').textContent = best;
+  document.getElementById('statLevel').textContent = getLevel();
+}
+
+function renderProgressRing() {
+  const done = (state.log[TODAY] || []).length;
+  const total = state.habits.filter(h => !h.archived).length;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+
+  document.getElementById('ringText').textContent = pct + '%';
+  document.getElementById('ringSub').textContent = done + '/' + total + ' done';
+  const offset = 377 - (377 * pct / 100);
+  document.getElementById('ringFg').style.strokeDashoffset = offset;
+}
+
+/* ============ STATS PAGE ============ */
+function renderStats() {
+  renderHeatmap();
+  renderWeekChart();
+  renderCategoryBreakdown();
+  renderAchievements();
+  renderOverallStats();
+}
+
+function switchHeatmap(days) {
+  state.currentHeatmap = days;
+  document.querySelectorAll('[data-hm]').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.hm) === days);
+  });
+  renderHeatmap();
+}
+
+function renderHeatmap() {
+  const hm = document.getElementById('heatmap');
+  if (!hm) return;
+  const days = state.currentHeatmap;
+  hm.className = 'heatmap' + (days === 365 ? ' year' : '');
+
+  let html = '';
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = dateKey(d);
+    const count = (state.log[key] || []).length;
+    const total = state.habits.filter(h => !h.archived).length || 1;
+    const ratio = count / total;
+    let level = '';
+    if (ratio > 0 && ratio <= 0.25) level = 'l1';
+    else if (ratio > 0.25 && ratio <= 0.5) level = 'l2';
+    else if (ratio > 0.5 && ratio <= 0.75) level = 'l3';
+    else if (ratio > 0.75) level = 'l4';
+    html += `<div class="heat-cell ${level}" title="${key}: ${count}/${total}"></div>`;
+  }
+  hm.innerHTML = html;
+}
+
+function renderWeekChart() {
+  const chart = document.getElementById('weekChart');
+  if (!chart) return;
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const now = new Date();
+  const dow = now.getDay() === 0 ? 6 : now.getDay() - 1;
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - dow);
+
+  let html = '';
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const key = dateKey(d);
+    const count = (state.log[key] || []).length;
+    const total = state.habits.filter(h => !h.archived).length || 1;
+    const pct = Math.round((count / total) * 100);
+    const isToday = key === TODAY;
+    html += `<div class="bar-col">
+      <div class="bar-bg"><div class="bar-fill ${isToday ? 'today' : ''}" style="height:${pct}%"></div></div>
+      <span class="bar-lbl ${isToday ? 'today' : ''}">${days[i]}</span>
+    </div>`;
+  }
+  chart.innerHTML = html;
+}
+
+function renderCategoryBreakdown() {
+  const box = document.getElementById('catBreakdown');
+  if (!box) return;
+  const cats = {};
+  state.habits.filter(h => !h.archived).forEach(h => {
+    const c = h.category || 'other';
+    if (!cats[c]) cats[c] = { total: 0, done: 0 };
+    cats[c].total++;
+    if ((state.log[TODAY] || []).includes(h.id)) cats[c].done++;
+  });
+
+  const entries = Object.entries(cats);
+  if (entries.length === 0) {
+    box.innerHTML = '<div class="empty">Koi data nahi</div>';
+    return;
+  }
+
+  box.innerHTML = entries.map(([cat, data]) => {
+    const pct = Math.round((data.done / data.total) * 100);
+    return `<div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+        <span style="text-transform:capitalize">${cat}</span>
+        <span style="color:var(--text3)">${data.done}/${data.total} • ${pct}%</span>
+      </div>
+      <div class="habit-progress"><div class="habit-progress-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderAchievements() {
+  const list = document.getElementById('achList');
+  if (!list) return;
+  list.innerHTML = ACHIEVEMENTS.map(a => {
+    const unlocked = state.achievements.includes(a.id);
+    return `<div class="ach ${unlocked ? 'unlocked' : ''}">
+      <span class="icon">${a.icon}</span>
+      <div><span class="name">${a.name}</span><span class="desc">${a.desc}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderOverallStats() {
+  const box = document.getElementById('overallStats');
+  if (!box) return;
+
+  const totalHabits = state.habits.length;
+  const totalChecks = Object.values(state.log).flat().length;
+  const activeDays = Object.keys(state.log).filter(k => (state.log[k] || []).length > 0).length;
+  const maxStreak = state.habits.reduce((m, h) => Math.max(m, getStreak(h.id)), 0);
+  const level = getLevel();
+
+  box.innerHTML = `
+    <div class="detail-stats">
+      <div class="detail-stat"><div class="num">${totalHabits}</div><div class="lbl">Total Habits</div></div>
+      <div class="detail-stat"><div class="num">${totalChecks}</div><div class="lbl">Check-ins</div></div>
+      <div class="detail-stat"><div class="num">${activeDays}</div><div class="lbl">Active Days</div></div>
+      <div class="detail-stat"><div class="num">${maxStreak}</div><div class="lbl">Best Streak</div></div>
+      <div class="detail-stat"><div class="num">${state.xp}</div><div class="lbl">Total XP</div></div>
+      <div class="detail-stat"><div class="num">L${level}</div><div class="lbl">${getLevelName()}</div></div>
+    </div>`;
+}
+
+/* ============ HABIT DETAIL MODAL ============ */
+function openDetail(id) {
+  state.currentDetailId = id;
+  const h = state.habits.find(x => x.id === id);
+  if (!h) return;
+
+  const streak = getStreak(id);
+  const best = getBestStreak(id);
+  const rate30 = getCompletionRate(id, 30);
+  const rate7 = getCompletionRate(id, 7);
+  const total = Object.values(state.log).flat().filter(x => x === id).length;
+
+  const content = document.getElementById('detailContent');
+  content.innerHTML = `
+    <div class="habit-detail-header">
+      <div class="emoji">${h.emoji || '🎯'}</div>
+      <div class="name">${escapeHtml(h.name)}</div>
+      <div class="cat">${h.category || 'other'}</div>
+    </div>
+    <div class="detail-stats">
+      <div class="detail-stat"><div class="num">🔥${streak}</div><div class="lbl">Current</div></div>
+      <div class="detail-stat"><div class="num">🏆${best}</div><div class="lbl">Best</div></div>
+      <div class="detail-stat"><div class="num">✓${total}</div><div class="lbl">Total</div></div>
+      <div class="detail-stat"><div class="num">${rate7}%</div><div class="lbl">7-Din</div></div>
+      <div class="detail-stat"><div class="num">${rate30}%</div><div class="lbl">30-Din</div></div>
+      <div class="detail-stat"><div class="num">L${getLevel()}</div><div class="lbl">Level</div></div>
+    </div>
+    <label style="font-size:11px;color:var(--text2);font-weight:600">30-Din History</label>
+    <div style="display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin-top:6px;margin-bottom:14px">
+      ${Array.from({length:30},(_,i)=>{
+        const d = new Date(); d.setDate(d.getDate()-29+i);
+        const k = dateKey(d);
+        const done = (state.log[k]||[]).includes(id);
+        return `<div class="heat-cell ${done?'l4':''}" title="${k}"></div>`;
+      }).join('')}
+    </div>
+    ${h.notes ? `<label>Notes</label><p style="font-size:12px;color:var(--text2);margin-bottom:10px">${escapeHtml(h.notes)}</p>` : ''}
+    ${h.reminder ? `<p style="font-size:12px;color:var(--text2);margin-bottom:10px">⏰ Reminder: ${h.reminder}</p>` : ''}
+  `;
+  document.getElementById('detailModal').classList.add('show');
+}
+
+function closeDetailModal() {
+  document.getElementById('detailModal').classList.remove('show');
+  state.currentDetailId = null;
+}
+
+function editCurrentHabit() {
+  const id = state.currentDetailId;
+  closeDetailModal();
+  if (id) openHabitModal(id);
+}
+
+/* ============ TEMPLATE LIBRARY ============ */
+function openTemplateLibrary() {
+  renderTemplates();
+  document.getElementById('templateModal').classList.add('show');
+}
+
+function closeTemplateModal() {
+  document.getElementById('templateModal').classList.remove('show');
+}
+
+function renderTemplates() {
+  const grid = document.getElementById('templateGrid');
+  if (!grid) return;
+  const search = (document.getElementById('templateSearch')?.value || '').toLowerCase();
+  const filtered = TEMPLATES.filter(t => t.name.toLowerCase().includes(search));
+
+  grid.innerHTML = filtered.map((t, i) => `
+    <div class="template-card" onclick="addFromTemplate(${TEMPLATES.indexOf(t)})">
+      <span class="emoji">${t.emoji}</span>
+      <span class="name">${t.name}</span>
+    </div>
+  `).join('') || '<div class="empty">Kuch nahi mila</div>';
+}
+
+function addFromTemplate(idx) {
+  const t = TEMPLATES[idx];
+  if (!t) return;
+  state.habits.push({
+    id: Date.now() + Math.random(),
+    name: t.name,
+    emoji: t.emoji,
+    color: COLORS[state.habits.length % COLORS.length],
+    type: t.type,
+    target: t.target || 1,
+    category: t.cat,
+    reminder: '',
+    notes: '',
+    created: TODAY,
+    archived: false,
+    order: state.habits.length
+  });
+  save();
+  render();
+  closeTemplateModal();
+  showToast('"' + t.name + '" add ho gaya! 🎉');
+  playSound('done');
+  vibrate(30);
+}
+
+/* ============ JOURNAL ============ */
+function openJournalModal() {
+  document.getElementById('journalDate').textContent = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const j = state.journal[TODAY] || { text: '', gratitude: '', mood: null };
+  document.getElementById('journalText').value = j.text || '';
+  document.getElementById('journalGratitude').value = j.gratitude || '';
+  state.journalMood = j.mood;
+  document.querySelectorAll('#journalMoodRow .mood-btn').forEach(b => {
+    b.classList.toggle('selected', parseInt(b.dataset.mood) === j.mood);
+  });
+  document.getElementById('journalModal').classList.add('show');
+}
+
+function closeJournalModal() {
+  document.getElementById('journalModal').classList.remove('show');
+}
+
+function saveJournal() {
+  state.journal[TODAY] = {
+    text: document.getElementById('journalText').value,
+    gratitude: document.getElementById('journalGratitude').value,
+    mood: state.journalMood,
+    saved: new Date().toISOString()
+  };
+  state.xp += 5;
+  checkAchievements();
+  save();
+  closeJournalModal();
+  renderJournal();
+  showToast('Journal save ho gaya 📔');
+  playSound('done');
+}
+
+function renderJournal() {
+  const list = document.getElementById('journalList');
+  const moodBox = document.getElementById('moodHistory');
+  if (!list) return;
+
+  const entries = Object.entries(state.journal).sort((a, b) => b[0].localeCompare(a[0]));
+  if (entries.length === 0) {
+    list.innerHTML = '<div class="empty">Abhi koi journal entry nahi.<br>Upar "Aaj ka note" dabayein ✏️</div>';
+  } else {
+    list.innerHTML = entries.slice(0, 30).map(([date, j]) => `
+      <div style="padding:12px;background:var(--card2);border-radius:12px;margin-bottom:8px">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:6px">${date} ${j.mood ? '• ' + ['','😢','😐','🙂','😊','🤩'][j.mood] : ''}</div>
+        ${j.text ? `<div style="font-size:13px;line-height:1.5;margin-bottom:6px">${escapeHtml(j.text)}</div>` : ''}
+        ${j.gratitude ? `<div style="font-size:11px;color:var(--text2);white-space:pre-wrap">🙏 ${escapeHtml(j.gratitude)}</div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  if (moodBox) {
+    const moods = Object.entries(state.moodLog).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 30);
+    if (moods.length === 0) {
+      moodBox.innerHTML = '<div class="empty">Koi mood data nahi</div>';
+    } else {
+      moodBox.innerHTML = moods.map(([d, m]) => `
+        <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid var(--border)">
+          <span style="color:var(--text3)">${d}</span>
+          <span>${['','😢','😐','🙂','😊','🤩'][m] || '—'}</span>
+        </div>
+      `).join('');
+    }
+  }
+}
+
+/* ============ TIMER ============ */
+let timerState = { id: null, seconds: 0, interval: null, running: false };
+
+function openTimer(habitId) {
+  const h = state.habits.find(x => x.id === habitId);
+  if (!h) return;
+  timerState.id = habitId;
+  const saved = (state.progress[TODAY] && state.progress[TODAY][habitId]) || 0;
+  timerState.seconds = saved * 60;
+  updateTimerDisplay();
+  document.getElementById('timerModal').classList.add('show');
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerState.seconds / 60);
+  const s = timerState.seconds % 60;
+  document.getElementById('timerDisplay').textContent =
+    String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+function toggleTimer() {
+  if (timerState.running) {
+    clearInterval(timerState.interval);
+    timerState.running = false;
+    document.getElementById('timerToggleBtn').textContent = 'Resume';
+  } else {
+    timerState.running = true;
+    document.getElementById('timerToggleBtn').textContent = 'Pause';
+    timerState.interval = setInterval(() => {
+      timerState.seconds++;
+      updateTimerDisplay();
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerState.interval);
+  timerState.running = false;
+  timerState.seconds = 0;
+  document.getElementById('timerToggleBtn').textContent = 'Start';
+  updateTimerDisplay();
+}
+
+function saveTimerProgress() {
+  clearInterval(timerState.interval);
+  timerState.running = false;
+  const mins = Math.floor(timerState.seconds / 60);
+  const h = state.habits.find(x => x.id === timerState.id);
+  if (!h) return;
+
+  if (!state.progress[TODAY]) state.progress[TODAY] = {};
+  state.progress[TODAY][timerState.id] = mins;
+
+  if (mins >= h.target) {
+    if (!state.log[TODAY]) state.log[TODAY] = [];
+    if (!state.log[TODAY].includes(timerState.id)) state.log[TODAY].push(timerState.id);
+    state.xp += 10;
+    checkAchievements();
+    showToast('Shabash! ' + mins + ' min complete 🎉');
+    playSound('done');
+  } else {
+    showToast(mins + ' min save ho gaye');
+  }
+
+  save();
+  document.getElementById('timerModal').classList.remove('show');
+  render();
+}
+
+/* ============ AI (GEMINI) ============ */
+async function callGemini(prompt) {
+  if (!state.apiKey) throw new Error('API key nahi mili. Settings mein daalein.');
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${state.apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.8, maxOutputTokens: 500 }
+      })
+    }
+  );
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Jawab nahi mila.';
+}
+
+function getHabitSummary() {
+  const doneToday = state.log[TODAY] || [];
+  return state.habits.filter(h => !h.archived).map(h => {
+    const s = getStreak(h.id);
+    const d = doneToday.includes(h.id) ? 'aaj done ✓' : 'aaj pending';
+    const rate = getCompletionRate(h.id);
+    return `- ${h.emoji || ''} ${h.name} (streak: ${s} din, ${d}, 30-din rate: ${rate}%)`;
+  }).join('\n') || '(Koi habit nahi)';
+}
+
+async function askAI(type) {
+  const out = document.getElementById('aiOutput');
+  if (!state.apiKey) {
+    out.textContent = '⚠️ Pehle ⚙️ Settings mein Gemini API key daalein.';
+    return;
+  }
+  if (state.habits.length === 0) {
+    out.textContent = '⚠️ Pehle koi habit add karein.';
+    return;
+  }
+
+  const btns = ['btnMotivate', 'btnSuggest', 'btnReport', 'btnRecovery', 'btnBreakdown', 'btnInsight'];
+  btns.forEach(id => { const b = document.getElementById(id); if (b) b.disabled = true; });
+  out.innerHTML = '<span class="spinner"></span> Soch raha hoon...';
+
+  const summary = getHabitSummary();
+  const name = state.userName || 'User';
+  const mood = state.moodLog[TODAY];
+  const moodTxt = mood ? `Aaj ka mood: ${['','😢','😐','🙂','😊','🤩'][mood]}` : '';
+
+  const prompts = {
+    motivate: `Mere habits:\n${summary}\n\n${moodTxt}\n\nMera naam ${name} hai. Mujhe 3 chhoti energetic lines mein motivate karein Roman Urdu mein. Emoji use karein.`,
+    suggest: `Mere habits:\n${summary}\n\nMere liye 3 naye habit suggestions dein jo mere routine mein fit hon. Har ek ke saath 1 line ka reason. Roman Urdu mein.`,
+    report: `Mere habits:\n${summary}\n\nMera weekly coaching report banayein Roman Urdu mein (150-200 words): kya achha, kya weak, 2 practical improvements.`,
+    recovery: `Mere kuch streaks toot gaye. Data:\n${summary}\n\nMujhe 3-din ka step-by-step recovery plan dein Roman Urdu mein.`,
+    breakdown: `Main yeh habit shuru karna chahta hoon: ${state.habits[0]?.name || 'koi habit'}\n\nIsko 5 chhote easy steps mein todkar dein jo shuru karna asaan ho. Roman Urdu mein.`,
+    insight: `Mere habit data se insights dein:\n${summary}\n\n3 interesting patterns ya observations dein Roman Urdu mein.`
+  };
+
+  try {
+    const text = await callGemini(prompts[type]);
+    out.textContent = text;
+    playSound('done');
+  } catch (err) {
+    out.textContent = '❌ Error: ' + err.message;
+  } finally {
+    btns.forEach(id => { const b = document.getElementById(id); if (b) b.disabled = false; });
+  }
+}
+
+/* ============ AI CHAT ============ */
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  if (!state.apiKey) { showToast('Pehle API key daalein', true); return; }
+
+  input.value = '';
+  addChatMsg(msg, 'user');
+  const thinkingId = 'think-' + Date.now();
+  addChatMsg('<span class="spinner"></span>', 'ai', true, thinkingId);
+
+  const summary = getHabitSummary();
+  try {
+    const text = await callGemini(`Mere habits:\n${summary}\n\nSawal: ${msg}\n\nJawab Roman Urdu mein, short aur helpful.`);
+    const el = document.getElementById(thinkingId);
+    if (el) el.textContent = text;
+    state.chat.push({ who: 'ai', text });
+    save();
+  } catch (e) {
+    const el = document.getElementById(thinkingId);
+    if (el) el.textContent = '❌ Error: ' + e.message;
+  }
+}
+
+function addChatMsg(text, who, isHtml, id) {
+  const box = document.getElementById('chatBox');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + who;
+  if (id) div.id = id;
+  if (isHtml) div.innerHTML = text; else div.textContent = text;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  if (!isHtml) state.chat.push({ who, text });
+}
+
+function clearChat() {
+  if (!confirm('Poori chat clear karein?')) return;
+  state.chat = [];
+  save();
+  document.getElementById('chatBox').innerHTML =
+    '<div class="chat-msg ai">Chat clear ho gayi. Naya sawal poochein.</div>';
+}
+
+/* ============ SETTINGS ============ */
+function openSettings() {
+  document.getElementById('apiKeyInput').value = state.apiKey;
+  document.getElementById('nameInput').value = state.userName;
+  document.getElementById('themeSelect').value = state.theme;
+  document.getElementById('pinInput').value = state.pin;
+  document.getElementById('soundSelect').value = state.sound;
+  document.getElementById('settingsModal').classList.add('show');
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.remove('show');
+}
+
+function saveSettings() {
+  state.apiKey = document.getElementById('apiKeyInput').value.trim();
+  state.userName = document.getElementById('nameInput').value.trim();
+  state.pin = document.getElementById('pinInput').value.replace(/\D/g, '').slice(0, 4);
+  state.sound = document.getElementById('soundSelect').value;
+
+  save();
+  closeSettings();
+  updateGreeting();
+  render();
+  showToast('Settings save ho gayi ✓');
+  playSound('done');
+}
+
+/* ============ EXPORT / IMPORT ============ */
+function exportData() {
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'habitai-backup-' + TODAY + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Data export ho gaya 📤');
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (!confirm('Purana data replace ho jayega. Continue?')) return;
+      state = { ...state, ...data };
+      save();
+      render();
+      applyTheme(state.theme);
+      showToast('Data import ho gaya ✓');
+    } catch (err) {
+      showToast('File sahi nahi hai', true);
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* ============ CONFETTI ============ */
+function celebrate() {
+  const colors = ['#6366f1','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+    p.style.animationDelay = Math.random() * 0.3 + 's';
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 3500);
+  }
+  showToast('🎉 Sab habits complete! Shabash!');
+  playSound('done');
+  vibrate([50, 30, 50]);
+}
+
+/* ============ PIN LOCK ============ */
+let pinBuffer = '';
+
+function pinPress(val) {
+  if (val === 'clear') { pinBuffer = ''; updatePinDots(); return; }
+  if (val === 'del') { pinBuffer = pinBuffer.slice(0, -1); updatePinDots(); return; }
+  if (pinBuffer.length >= 4) return;
+  pinBuffer += val;
+  updatePinDots();
+
+  if (pinBuffer.length === 4) {
+    setTimeout(() => {
+      if (pinBuffer === state.pin) {
+        document.getElementById('lockScreen').classList.remove('show');
+        pinBuffer = '';
+        updatePinDots();
+      } else {
+        showToast('Ghalat PIN', true);
+        pinBuffer = '';
+        updatePinDots();
+        playSound('error');
+        vibrate(100);
+      }
+    }, 200);
+  }
+}
+
+function updatePinDots() {
+  const dots = document.querySelectorAll('#pinDots div');
+  dots.forEach((d, i) => d.classList.toggle('filled', i < pinBuffer.length));
+}
+
+/* ============ ONBOARDING ============ */
+const ONBOARD_STEPS = [
+  { icon: '🎯', title: 'HabitAI Pro Mein Khush Aamdeed', text: 'Duniya ka sab se advanced habit tracker. AI Coach, streaks, analytics, sab kuch.' },
+  { icon: '➕', title: 'Habit Add Karein', text: 'Neeche + button dabakar naya habit add karein. 50+ ready templates bhi hain.' },
+  { icon: '🤖', title: 'AI Coach Se Poochein', text: 'AI tab mein jaakar Gemini API key daalein, phir motivation, suggestions, reports lein.' },
+  { icon: '📊', title: 'Progress Dekhein', text: 'Stats tab mein heatmap, charts, achievements — sab aapki mehnat dikhayenge.' }
+];
+let obStep = 0;
+
+function showOnboard() {
+  if (state.onboarded) return;
+  obStep = 0;
+  updateOnboard();
+  document.getElementById('onboard').classList.add('show');
+}
+
+function updateOnboard() {
+  const s = ONBOARD_STEPS[obStep];
+  document.getElementById('obIcon').textContent = s.icon;
+  document.getElementById('obTitle').textContent = s.title;
+  document.getElementById('obText').textContent = s.text;
+  document.querySelectorAll('#obDots div').forEach((d, i) => d.classList.toggle('active', i === obStep));
+  document.getElementById('obNext').textContent = obStep === ONBOARD_STEPS.length - 1 ? 'Shuru Karein 🚀' : 'Agla →';
+}
+
+function nextOnboard() {
+  if (obStep < ONBOARD_STEPS.length - 1) {
+    obStep++;
+    updateOnboard();
+  } else {
+    state.onboarded = true;
+    save();
+    document.getElementById('onboard').classList.remove('show');
+    openHabitModal();
+  }
+}
+
+function skipOnboard() {
+  state.onboarded = true;
+  save();
+  document.getElementById('onboard').classList.remove('show');
+}
+
+/* ============ QUOTES ============ */
+function renderQuote() {
+  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  const box = document.getElementById('quoteBox');
+  if (box) box.innerHTML = `"${q.t}"<div class="author">— ${q.a}</div>`;
+}
+
+/* ============ REMINDERS (NOTIFICATIONS) ============ */
+function checkReminders() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission !== 'granted') return;
+
+  const now = new Date();
+  const currentTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+  state.habits.filter(h => !h.archived && h.reminder === currentTime).forEach(h => {
+    const done = (state.log[TODAY] || []).includes(h.id);
+    if (!done) {
+      new Notification('HabitAI Reminder', {
+        body: `${h.emoji || '🎯'} ${h.name} — abhi waqt hai!`,
+        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="80" font-size="80">🎯</text></svg>'
+      });
+    }
+  });
+}
+
+function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+/* ============ MODAL BACKDROP CLOSE ============ */
+document.querySelectorAll('.modal-bg').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); });
+});
+
+/* ============ KEYBOARD SHORTCUTS ============ */
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  if (e.key === 'n' || e.key === 'N') { e.preventDefault(); openHabitModal(); }
+  else if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-bg.show').forEach(m => m.classList.remove('show'));
+  }
+  else if (e.key === '1') switchPage('home');
+  else if (e.key === '2') switchPage('ai');
+  else if (e.key === '3') switchPage('stats');
+  else if (e.key === '4') switchPage('journal');
+});
+
+/* ============ ENTER KEY FOR MAIN INPUT ============ */
+document.getElementById('habitInput')?.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    quickAddHabit(e);
+  }
+});
+
+/* ============ PWA SERVICE WORKER ============ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    try {
+      const swCode = `
+        const CACHE = 'habitai-pro-v2';
+        self.addEventListener('install', e => self.skipWaiting());
+        self.addEventListener('activate', e => e.waitUntil(clients.claim()));
+        self.addEventListener('fetch', e => {
+          e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => r)));
+        });
+      `;
+      const blob = new Blob([swCode], { type: 'application/javascript' });
+      navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+    } catch (e) {}
+  });
+}
+
+/* ============ INITIALIZE ============ */
+function init() {
+  applyTheme(state.theme);
+  buildEmojiPicker();
+  buildColorPicker();
+  renderCategoryChips();
+  renderQuote();
+  render();
+  requestNotificationPermission();
+
+  // Restore chat history
+  const chatBox = document.getElementById('chatBox');
+  if (chatBox && state.chat.length > 0) {
+    chatBox.innerHTML = '';
+    state.chat.slice(-20).forEach(m => {
+      const div = document.createElement('div');
+      div.className = 'chat-msg ' + m.who;
+      div.textContent = m.text;
+      chatBox.appendChild(div);
+    });
+  }
+
+  // PIN lock screen
+  if (state.pin && state.pin.length === 4) {
+    document.getElementById('lockScreen').classList.add('show');
+  } else {
+    showOnboard();
+  }
+
+  // Check reminders every minute
+  setInterval(checkReminders, 60000);
+
+  // Midnight reset check
+  setInterval(() => {
+    const newToday = new Date().toISOString().slice(0, 10);
+    if (newToday !== TODAY) location.reload();
+  }, 60000);
+}
+
+// Start the app
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 </script>
 </body>
 </html>
